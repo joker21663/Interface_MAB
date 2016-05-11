@@ -17,8 +17,11 @@ try:
     from gladevcp.gladebuilder import GladeBuilder
 except:
     sys.exit(1)
+first_position=0
+last_position=0
     
 class HellowWorldGTK:
+
 
     def __init__(self):
         self.builder = gtk.Builder()
@@ -59,6 +62,14 @@ class HellowWorldGTK:
             if (isinstance(widget2, gtk.Label)):
                 widget2.set_justify(gtk.JUSTIFY_CENTER)
 
+
+    def on_textview3_move_cursor(self, widget,MovementStepU,intparam,boolparam):
+        self.textbuffer = self.builder.get_object("textview3").get_buffer()
+        self.textbuffer.remove_tag_by_name("Selected",self.textbuffer.get_iter_at_offset(first_position),self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position-1))
+        self.textbuffer.apply_tag_by_name("Selected",self.textbuffer.get_iter_at_offset(first_position),self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position))
+#       print (self.textbuffer.props.cursor_position)
+
+        
     def Click_Button_panel(self, widget):
         #+ Подкаждую закладку меняем кнопки
 
@@ -66,10 +77,12 @@ class HellowWorldGTK:
         NameButton = widget.get_label()
         if (NameButton.translate(None, string.whitespace).find('F1Начатьвыделение')==0):
             self.textbuffer = self.builder.get_object("textview3").get_buffer()
+            first_position=self.textbuffer.props.cursor_position
             self.Tag = self.textbuffer.create_tag("Selected",background='yellow',size_points=24.0)
+            self.textbuffer.apply_tag(self.Tag,self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position),self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position))
 #            tttt=gtk.TextView
-#            tttt.get_buffer().s
-            print self.Tag
+#            tttt.get_buffer().a
+#            print self.textbuffer.props.cursor_position
             
         
         elif (NameButton.translate(None, string.whitespace).find('F5Редакторпрограмм')==0):
