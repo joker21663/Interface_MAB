@@ -17,13 +17,18 @@ try:
     from gladevcp.gladebuilder import GladeBuilder
 except:
     sys.exit(1)
+
 first_position=0
 last_position=0
+isSelect=False
+
+
     
 class HellowWorldGTK:
 
 
     def __init__(self):
+       
         self.builder = gtk.Builder()
         self.builder.add_from_file("work.glade")
 #        halcomp = hal.component("work")
@@ -39,10 +44,14 @@ class HellowWorldGTK:
         self.builder.get_object("label8").modify_font(lABELFont)
         self.builder.get_object("label9").modify_font(lABELFont)
         self.builder.get_object("label15").modify_font(lABELFont)
+        self.builder.get_object("label20").modify_font(lABELFont)
+        
 #- Устанавливаем шрифты и все что не смог гладе       
         self.window.show()
         self.Click_Button_panel(self.builder.get_object('f1'))
-
+#+ Тэг на выделение
+        self.Tag = self.builder.get_object("textview3").get_buffer().create_tag("Selected",background='yellow',size_points=24.0)
+#- Тэг на выделение 
         
         
 #        panel = gladevcp.makepins.GladePanel( halcomp, "work.glade", self.builder, None)
@@ -64,27 +73,88 @@ class HellowWorldGTK:
 
 
     def on_textview3_move_cursor(self, widget,MovementStepU,intparam,boolparam):
-        self.textbuffer = self.builder.get_object("textview3").get_buffer()
-        self.textbuffer.remove_tag_by_name("Selected",self.textbuffer.get_iter_at_offset(first_position),self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position-1))
-        self.textbuffer.apply_tag_by_name("Selected",self.textbuffer.get_iter_at_offset(first_position),self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position))
+        global last_position
+        if isSelect:
+            self.textbuffer = self.builder.get_object("textview3").get_buffer()
+            self.textbuffer.remove_tag_by_name("Selected",self.textbuffer.get_iter_at_offset(first_position),self.textbuffer.get_iter_at_offset(last_position))
+            self.textbuffer.apply_tag_by_name("Selected",self.textbuffer.get_iter_at_offset(first_position),self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position))
+            last_position = self.textbuffer.props.cursor_position
 #       print (self.textbuffer.props.cursor_position)
 
         
     def Click_Button_panel(self, widget):
         #+ Подкаждую закладку меняем кнопки
-
-        
+        global first_position
+        global isSelect
         NameButton = widget.get_label()
         if (NameButton.translate(None, string.whitespace).find('F1Начатьвыделение')==0):
             self.textbuffer = self.builder.get_object("textview3").get_buffer()
             first_position=self.textbuffer.props.cursor_position
-            self.Tag = self.textbuffer.create_tag("Selected",background='yellow',size_points=24.0)
+            
+            self.textbuffer.remove_all_tags(self.textbuffer.get_iter_at_offset(0),self.textbuffer.get_iter_at_offset(self.textbuffer.get_char_count()))
             self.textbuffer.apply_tag(self.Tag,self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position),self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position))
+            self.textbuffer.select_range(self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position), self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position))
+            isSelect=True
 #            tttt=gtk.TextView
 #            tttt.get_buffer().a
 #            print self.textbuffer.props.cursor_position
-            
-        
+        elif (NameButton.translate(None, string.whitespace).find('F2Закончитьвыделение')==0): 
+            isSelect=False
+        elif (NameButton.translate(None, string.whitespace).find('F3Скопировать')==0): 
+            isSelect=False
+            self.textbuffer = self.builder.get_object("textview3").get_buffer() 
+            self.textbuffer.select_range(self.textbuffer.get_iter_at_offset(first_position),self.textbuffer.get_iter_at_offset(last_position))   
+            self.textbuffer.copy_clipboard(gtk.clipboard_get("CLIPBOARD"))
+#            self.textbuffer.delete_selection(True,True)
+        elif (NameButton.translate(None, string.whitespace).find('F4Вырезать')==0): 
+            isSelect=False
+            self.textbuffer = self.builder.get_object("textview3").get_buffer() 
+            self.textbuffer.select_range(self.textbuffer.get_iter_at_offset(first_position),self.textbuffer.get_iter_at_offset(last_position))   
+            self.textbuffer.cut_clipboard(gtk.clipboard_get("CLIPBOARD"),True)
+#            self.textbuffer.delete_selection(True,True)    
+        elif (NameButton.translate(None, string.whitespace).find('F5Вставить')==0): 
+            isSelect=False
+            self.textbuffer = self.builder.get_object("textview3").get_buffer() 
+            self.textbuffer.paste_clipboard(gtk.clipboard_get("CLIPBOARD"),None,True)
+        elif (NameButton.translate(None, string.whitespace).find('F1Выборфайлапрограммы')==0): 
+            self.Fileprogramm = self.builder.get_object("vcp_filechooserbutton1")
+            dialog = gtk.FileChooserDialog("Выбор файла программы..",None,gtk.FILE_CHOOSER_ACTION_OPEN,(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+            dialog.set_default_response(gtk.RESPONSE_OK)
+   
+#            filter = gtk.FileFilter()
+#            filter.set_name("All files")
+#            filter.add_pattern("*")
+#            dialog.add_filter(filter)
+   
+            filter = gtk.FileFilter()
+            filter.set_name("Images")
+            filter.add_mime_type("image/png")
+            filter.add_mime_type("image/jpeg")
+            filter.add_mime_type("image/gif")
+            filter.add_pattern("*.png")
+            filter.add_pattern("*.jpg")
+            filter.add_pattern("*.gif")
+            filter.add_pattern("*.tif")
+            filter.add_pattern("*.xpm")
+            filter.add_pattern("*.ngc")
+            dialog.add_filter(filter)
+   
+            response = dialog.run()
+            if response == gtk.RESPONSE_OK:
+                self.Fileprogramm.set_filename(dialog.get_filename())
+                my_file = open(dialog.get_filename())
+                self.textbuffer = self.builder.get_object("textview3").get_buffer() 
+                self.textbuffer.set_text(my_file.read())
+                self.builder.get_object("ProgName").set_text(dialog.get_filename())
+#                my_string = my_file.read()
+#                print("Было прочитано:")
+#                print(my_string)
+                my_file.close()
+#                print dialog.get_filename(), 'selected'
+#            elif response == gtk.RESPONSE_CANCEL:
+#                print 'Closed, no files selected'
+            dialog.destroy()
+
         elif (NameButton.translate(None, string.whitespace).find('F5Редакторпрограмм')==0):
             self.Set_Font_Text_Button('f1','F1 \nНачать\nвыделение')
             self.Set_Font_Text_Button('f2','F2 \nЗакончить\nвыделение')
@@ -95,6 +165,17 @@ class HellowWorldGTK:
             self.Set_Font_Text_Button('f7','F7 \n  \n ')
             self.Set_Font_Text_Button('f8','F8 \nВернуться\n на \nГлавную')
             self.builder.get_object("notebook1").set_current_page(4)
+        elif (NameButton.translate(None, string.whitespace).find('F7Сервис')==0):
+            self.Set_Font_Text_Button('f1','F1 \nВыбор файла\nпрограммы')
+            self.Set_Font_Text_Button('f2','F2 \n\n')
+            self.Set_Font_Text_Button('f3','F3 \n\n ')
+            self.Set_Font_Text_Button('f4','F4 \n\n ')
+            self.Set_Font_Text_Button('f5','F5 \n\n ')
+            self.Set_Font_Text_Button('f6','F6 \n  \n ')
+            self.Set_Font_Text_Button('f7','F7 \n  \n ')
+            self.Set_Font_Text_Button('f8','F8 \nВернуться\n на \nГлавную')
+            self.builder.get_object("notebook1").set_current_page(6)    
+            
         else:
             self.Set_Font_Text_Button('f1','F1 \nРучное \nУправление')
             self.Set_Font_Text_Button('f2','F2 \nAUTO\n')
