@@ -34,6 +34,7 @@ class HellowWorldGTK:
 #        halcomp = hal.component("work")
         self.builder.connect_signals(self)
         self.window = self.builder.get_object("MainWindow")
+        
 #+ Устанавливаем шрифты и все что не смог гладе
         lABELFont = pango.FontDescription("Tahoma 24")
         self.builder.get_object("ProgName").modify_font(lABELFont)
@@ -87,7 +88,7 @@ class HellowWorldGTK:
         global first_position
         global isSelect
         NameButton = widget.get_label()
-        if (NameButton.translate(None, string.whitespace).find('F1Начатьвыделение')==0):
+        if (NameButton.translate(None, string.whitespace).find('F3Начатьвыделение')==0):
             self.textbuffer = self.builder.get_object("textview3").get_buffer()
             first_position=self.textbuffer.props.cursor_position
             
@@ -98,21 +99,49 @@ class HellowWorldGTK:
 #            tttt=gtk.TextView
 #            tttt.get_buffer().a
 #            print self.textbuffer.props.cursor_position
-        elif (NameButton.translate(None, string.whitespace).find('F2Закончитьвыделение')==0): 
+        elif (NameButton.translate(None, string.whitespace).find('F2Поиск')==0): 
+            self.findwindow = self.builder.get_object("findwindow")
+            self.Set_Font_Text_Button('find','F1 \nПоиск\n')
+            self.Set_Font_Text_Button('cancel','F2 \nОтмена\n')
+            self.findwindow.show()
+        elif (NameButton.translate(None, string.whitespace).find('F1Поиск')==0): 
+            findtext=self.builder.get_object("entry1").get_text()
+            self.textbuffer = self.builder.get_object("textview3").get_buffer()
+            textToFind=self.textbuffer.get_text(self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position), self.textbuffer.get_iter_at_offset(self.textbuffer.get_char_count()), True)
+            index=textToFind.find(findtext)
+            if (index>-1):
+                self.textbuffer.remove_all_tags(self.textbuffer.get_iter_at_offset(0),self.textbuffer.get_iter_at_offset(self.textbuffer.get_char_count()))
+                self.textbuffer.apply_tag(self.Tag,self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position+index),self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position+index+len(findtext)))
+                self.textbuffer.select_range(self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position+index), self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position+index))
+                
+            else:
+                parent = None
+                md = gtk.MessageDialog(parent, 
+                gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO, 
+                gtk.BUTTONS_CLOSE, "Ничего не найдено")
+                md.run()
+                md.destroy()
+            self.findwindow.hide()
+        elif (NameButton.translate(None, string.whitespace).find('F2Отмена')==0): 
+            self.findwindow.hide()
+ 
+
+ 
+        elif (NameButton.translate(None, string.whitespace).find('F4Закончитьвыделение')==0): 
             isSelect=False
-        elif (NameButton.translate(None, string.whitespace).find('F3Скопировать')==0): 
+        elif (NameButton.translate(None, string.whitespace).find('F5Скопировать')==0): 
             isSelect=False
             self.textbuffer = self.builder.get_object("textview3").get_buffer() 
             self.textbuffer.select_range(self.textbuffer.get_iter_at_offset(first_position),self.textbuffer.get_iter_at_offset(last_position))   
             self.textbuffer.copy_clipboard(gtk.clipboard_get("CLIPBOARD"))
 #            self.textbuffer.delete_selection(True,True)
-        elif (NameButton.translate(None, string.whitespace).find('F4Вырезать')==0): 
+        elif (NameButton.translate(None, string.whitespace).find('F6Вырезать')==0): 
             isSelect=False
             self.textbuffer = self.builder.get_object("textview3").get_buffer() 
             self.textbuffer.select_range(self.textbuffer.get_iter_at_offset(first_position),self.textbuffer.get_iter_at_offset(last_position))   
             self.textbuffer.cut_clipboard(gtk.clipboard_get("CLIPBOARD"),True)
 #            self.textbuffer.delete_selection(True,True)    
-        elif (NameButton.translate(None, string.whitespace).find('F5Вставить')==0): 
+        elif (NameButton.translate(None, string.whitespace).find('F7Вставить')==0): 
             isSelect=False
             self.textbuffer = self.builder.get_object("textview3").get_buffer() 
             self.textbuffer.paste_clipboard(gtk.clipboard_get("CLIPBOARD"),None,True)
@@ -156,17 +185,17 @@ class HellowWorldGTK:
             dialog.destroy()
 
         elif (NameButton.translate(None, string.whitespace).find('F5Редакторпрограмм')==0):
-            self.Set_Font_Text_Button('f1','F1 \nНачать\nвыделение')
-            self.Set_Font_Text_Button('f2','F2 \nЗакончить\nвыделение')
-            self.Set_Font_Text_Button('f3','F3 \nСкопировать\n ')
-            self.Set_Font_Text_Button('f4','F4 \nВырезать\n ')
-            self.Set_Font_Text_Button('f5','F5 \nВставить\n ')
-            self.Set_Font_Text_Button('f6','F6 \n  \n ')
-            self.Set_Font_Text_Button('f7','F7 \n  \n ')
+            self.Set_Font_Text_Button('f1','F1 \nВыбор файла\nпрограммы')
+            self.Set_Font_Text_Button('f2','F2 \nПоиск')
+            self.Set_Font_Text_Button('f3','F3 \nНачать\nвыделение')
+            self.Set_Font_Text_Button('f4','F4 \nЗакончить\nвыделение')
+            self.Set_Font_Text_Button('f5','F5 \nСкопировать\n')
+            self.Set_Font_Text_Button('f6','F6 \nВырезать\n ')
+            self.Set_Font_Text_Button('f7','F7 \nВставить\n')
             self.Set_Font_Text_Button('f8','F8 \nВернуться\n на \nГлавную')
             self.builder.get_object("notebook1").set_current_page(4)
         elif (NameButton.translate(None, string.whitespace).find('F7Сервис')==0):
-            self.Set_Font_Text_Button('f1','F1 \nВыбор файла\nпрограммы')
+            self.Set_Font_Text_Button('f1','F1 ')
             self.Set_Font_Text_Button('f2','F2 \n\n')
             self.Set_Font_Text_Button('f3','F3 \n\n ')
             self.Set_Font_Text_Button('f4','F4 \n\n ')
