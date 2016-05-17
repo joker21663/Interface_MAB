@@ -98,6 +98,7 @@
                                         <property name="abs_color">#00000000ffff</property>
                                         <property name="dtg_color">#ffffffff0000</property>
                                         <property name="homed_color">#0000ffff0000</property>
+                                        <property name="metric_units">False</property>
                                         <property name="rel_color">#000000000000</property>
                                         <property name="unhomed_color">#ffff00000000</property>
                                       </object>
@@ -310,6 +311,7 @@
                                 <property name="dtg_color">#ffffffff0000</property>
                                 <property name="font_size">15</property>
                                 <property name="homed_color">#0000ffff0000</property>
+                                <property name="metric_units">False</property>
                                 <property name="rel_color">#000000000000</property>
                                 <property name="unhomed_color">#ffff00000000</property>
                               </object>
@@ -1063,10 +1065,6 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="double_buffered">False</property>
-                <property name="grid_size">0.0099999997764825821</property>
-                <property name="show_dtg">False</property>
-                <property name="show_extents_option">False</property>
-                <property name="show_lathe_radius">True</property>
               </object>
               <packing>
                 <property name="position">6</property>

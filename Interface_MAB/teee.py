@@ -30,6 +30,9 @@ class HellowWorldGTK:
 
 
     def __init__(self):
+#  Константы всякие
+        self.type_gremlin_view = ("X","Y","Z","P")
+
 #  Установка emc       
         self.emc = linuxcnc
         self.status = self.emc.stat()
@@ -39,11 +42,12 @@ class HellowWorldGTK:
         datadir = os.path.join(BASE, "usr", "share", "linuxcnc")
         xmlname = os.path.join(datadir,"work.glade")
         self.builder.add_from_file(xmlname)
-        halcomp = hal.component("work")
+#        halcomp = hal.component("work")
         self.builder.connect_signals(self)
         self.window = self.builder.get_object("MainWindow")
 #  Установка HAL         
-#        self.halcomp = hal.component("work")
+        self.halcomp = hal.component("work")
+        self.machine_status = 0
 #+ Устанавливаем шрифты и все что не смог гладе
         lABELFont = pango.FontDescription("Tahoma 24")
         self.builder.get_object("ProgName").modify_font(lABELFont)
@@ -203,6 +207,10 @@ class HellowWorldGTK:
         elif (NameButton.translate(None, string.whitespace).find('F7Test')==0):
             self.status.poll()
             print self.machine_status
+        elif (NameButton.translate(None, string.whitespace).find('F1СменитьВид')==0):
+            gremlin=self.builder.get_object("hal_gremlin1")
+            gremlin.set_property('view',"X")
+            print self.type_gremlin_view.index("P")    
         elif (NameButton.translate(None, string.whitespace).find('F5Редакторпрограмм')==0):
             self.Set_Font_Text_Button('f1','F1 \nВыбор файла\nпрограммы')
             self.Set_Font_Text_Button('f2','F2 \nПоиск')
@@ -225,8 +233,8 @@ class HellowWorldGTK:
             self.Set_Font_Text_Button('f8','F8 \nВыход\n')
             self.Set_Font_Text_Button('f9','\nГлавное\nменю')
             self.builder.get_object("notebook1").set_current_page(7)    
-        elif (NameButton.translate(None, string.whitespace).find('F7Сервис')==0):
-            self.Set_Font_Text_Button('f1','F1 ')
+        elif (NameButton.translate(None, string.whitespace).find('F6Графика')==0 or NameButton.translate(None, string.whitespace).find('F8Графика')==0):
+            self.Set_Font_Text_Button('f1','F1 \nСменить\nВид')
             self.Set_Font_Text_Button('f2','F2 \n\n')
             self.Set_Font_Text_Button('f3','F3 \n\n ')
             self.Set_Font_Text_Button('f4','F4 \n\n ')
@@ -235,7 +243,7 @@ class HellowWorldGTK:
             self.Set_Font_Text_Button('f7','F7 \n\n ')
             self.Set_Font_Text_Button('f8','F8 \n\n\n')
             self.Set_Font_Text_Button('f9','\nГлавное\nменю')
-            self.builder.get_object("notebook1").set_current_page(7)   
+            self.builder.get_object("notebook1").set_current_page(6)   
         elif (NameButton.translate(None, string.whitespace).find('F1РучноеУправление')==0):
             self.Set_Font_Text_Button('f1','F1 \nMDI\nРучной набор')
             self.Set_Font_Text_Button('f2','F2 \nМаховичок\n')
