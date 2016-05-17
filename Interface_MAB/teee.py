@@ -11,9 +11,11 @@ try:
     import gtk.gdk
     import gtk.glade
     import hal
+    import linuxcnc
     import gladevcp.makepins
     import pango
     import string
+    import sys,os
     from gladevcp.gladebuilder import GladeBuilder
 except:
     sys.exit(1)
@@ -28,13 +30,20 @@ class HellowWorldGTK:
 
 
     def __init__(self):
-       
+#  Установка emc       
+        self.emc = linuxcnc
+        self.status = self.emc.stat()
+        
         self.builder = gtk.Builder()
-        self.builder.add_from_file("work.glade")
-#        halcomp = hal.component("work")
+        BASE = os.path.abspath("/")
+        datadir = os.path.join(BASE, "usr", "share", "linuxcnc")
+        xmlname = os.path.join(datadir,"work.glade")
+        self.builder.add_from_file(xmlname)
+        halcomp = hal.component("work")
         self.builder.connect_signals(self)
         self.window = self.builder.get_object("MainWindow")
-        
+#  Установка HAL         
+#        self.halcomp = hal.component("work")
 #+ Устанавливаем шрифты и все что не смог гладе
         lABELFont = pango.FontDescription("Tahoma 24")
         self.builder.get_object("ProgName").modify_font(lABELFont)
@@ -45,11 +54,28 @@ class HellowWorldGTK:
         self.builder.get_object("label8").modify_font(lABELFont)
         self.builder.get_object("label9").modify_font(lABELFont)
         self.builder.get_object("label15").modify_font(lABELFont)
-        self.builder.get_object("label20").modify_font(lABELFont)
+#        self.builder.get_object("label20").modify_font(lABELFont)
+
+
+        self.builder.get_object("ProgName1").modify_font(lABELFont)
+        self.builder.get_object("label27").modify_font(lABELFont)
+        self.builder.get_object("label28").modify_font(lABELFont)
+        self.builder.get_object("label29").modify_font(lABELFont)
+        self.builder.get_object("label24").modify_font(lABELFont)
+        self.builder.get_object("label25").modify_font(lABELFont)
+        self.builder.get_object("label26").modify_font(lABELFont)
+        
+        
+#- Устанавливаем акселераторы которые не смог гладе 
+        agroup = gtk.AccelGroup()
+        self.window.add_accel_group(agroup)
+        knn=self.builder.get_object("f9")
+        knn.add_accelerator("clicked",agroup,gtk.keysyms.Escape, 0, 0)
+
         
 #- Устанавливаем шрифты и все что не смог гладе       
         self.window.show()
-        self.Click_Button_panel(self.builder.get_object('f1'))
+        self.Click_Button_panel(self.builder.get_object('f9'))
 #+ Тэг на выделение
         self.Tag = self.builder.get_object("textview3").get_buffer().create_tag("Selected",background='yellow',size_points=24.0)
 #- Тэг на выделение 
@@ -113,7 +139,6 @@ class HellowWorldGTK:
                 self.textbuffer.remove_all_tags(self.textbuffer.get_iter_at_offset(0),self.textbuffer.get_iter_at_offset(self.textbuffer.get_char_count()))
                 self.textbuffer.apply_tag(self.Tag,self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position+index),self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position+index+len(findtext)))
                 self.textbuffer.select_range(self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position+index), self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position+index))
-                
             else:
                 parent = None
                 md = gtk.MessageDialog(parent, 
@@ -124,9 +149,6 @@ class HellowWorldGTK:
             self.findwindow.hide()
         elif (NameButton.translate(None, string.whitespace).find('F2Отмена')==0): 
             self.findwindow.hide()
- 
-
- 
         elif (NameButton.translate(None, string.whitespace).find('F4Закончитьвыделение')==0): 
             isSelect=False
         elif (NameButton.translate(None, string.whitespace).find('F5Скопировать')==0): 
@@ -154,7 +176,6 @@ class HellowWorldGTK:
 #            filter.set_name("All files")
 #            filter.add_pattern("*")
 #            dialog.add_filter(filter)
-   
             filter = gtk.FileFilter()
             filter.set_name("Images")
             filter.add_mime_type("image/png")
@@ -166,8 +187,8 @@ class HellowWorldGTK:
             filter.add_pattern("*.tif")
             filter.add_pattern("*.xpm")
             filter.add_pattern("*.ngc")
+            filter.add_pattern("*.nc")
             dialog.add_filter(filter)
-   
             response = dialog.run()
             if response == gtk.RESPONSE_OK:
                 self.Fileprogramm.set_filename(dialog.get_filename())
@@ -183,6 +204,8 @@ class HellowWorldGTK:
 #            elif response == gtk.RESPONSE_CANCEL:
 #                print 'Closed, no files selected'
             dialog.destroy()
+        elif (NameButton.translate(None, string.whitespace).find('F8Выход')==0):
+            gtk.main_quit()
 
         elif (NameButton.translate(None, string.whitespace).find('F5Редакторпрограмм')==0):
             self.Set_Font_Text_Button('f1','F1 \nВыбор файла\nпрограммы')
@@ -192,19 +215,42 @@ class HellowWorldGTK:
             self.Set_Font_Text_Button('f5','F5 \nСкопировать\n')
             self.Set_Font_Text_Button('f6','F6 \nВырезать\n ')
             self.Set_Font_Text_Button('f7','F7 \nВставить\n')
-            self.Set_Font_Text_Button('f8','F8 \nВернуться\n на \nГлавную')
-            self.builder.get_object("notebook1").set_current_page(4)
+            self.Set_Font_Text_Button('f8','F8 \n\nГрафика\n')
+            self.Set_Font_Text_Button('f9','\nГлавное\nменю')
+            self.builder.get_object("notebook1").set_current_page(5)
+        elif (NameButton.translate(None, string.whitespace).find('F7Сервис')==0):
+            self.Set_Font_Text_Button('f1','F1 \n\n')
+            self.Set_Font_Text_Button('f2','F2 \n\n')
+            self.Set_Font_Text_Button('f3','F3 \n\n ')
+            self.Set_Font_Text_Button('f4','F4 \n\n ')
+            self.Set_Font_Text_Button('f5','F5 \n\n ')
+            self.Set_Font_Text_Button('f6','F6 \n\n ')
+            self.Set_Font_Text_Button('f7','F7 \n\n ')
+            self.Set_Font_Text_Button('f8','F8 \nВыход\n')
+            self.Set_Font_Text_Button('f9','\nГлавное\nменю')
+            self.builder.get_object("notebook1").set_current_page(7)    
         elif (NameButton.translate(None, string.whitespace).find('F7Сервис')==0):
             self.Set_Font_Text_Button('f1','F1 ')
             self.Set_Font_Text_Button('f2','F2 \n\n')
             self.Set_Font_Text_Button('f3','F3 \n\n ')
             self.Set_Font_Text_Button('f4','F4 \n\n ')
             self.Set_Font_Text_Button('f5','F5 \n\n ')
-            self.Set_Font_Text_Button('f6','F6 \n  \n ')
-            self.Set_Font_Text_Button('f7','F7 \n  \n ')
-            self.Set_Font_Text_Button('f8','F8 \nВернуться\n на \nГлавную')
-            self.builder.get_object("notebook1").set_current_page(6)    
-            
+            self.Set_Font_Text_Button('f6','F6 \n\n ')
+            self.Set_Font_Text_Button('f7','F7 \n\n ')
+            self.Set_Font_Text_Button('f8','F8 \n\n\n')
+            self.Set_Font_Text_Button('f9','\nГлавное\nменю')
+            self.builder.get_object("notebook1").set_current_page(7)   
+        elif (NameButton.translate(None, string.whitespace).find('F1РучноеУправление')==0):
+            self.Set_Font_Text_Button('f1','F1 \nMDI\nРучной набор')
+            self.Set_Font_Text_Button('f2','F2 \nМаховичок\n')
+            self.Set_Font_Text_Button('f3','F3 \n0.001\n ')
+            self.Set_Font_Text_Button('f4','F4 \n0.01\n ')
+            self.Set_Font_Text_Button('f5','F5 \n0.1\n')
+            self.Set_Font_Text_Button('f6','F6 \nВращение шпинделя\nвправо')
+            self.Set_Font_Text_Button('f7','F7 \nСтоп\nшпиндель')
+            self.Set_Font_Text_Button('f8','F8 \nВращение шпинделя\nвлево')
+            self.Set_Font_Text_Button('f9','\nГлавное\nменю')
+            self.builder.get_object("notebook1").set_current_page(0)        
         else:
             self.Set_Font_Text_Button('f1','F1 \nРучное \nУправление')
             self.Set_Font_Text_Button('f2','F2 \nAUTO\n')
@@ -214,9 +260,8 @@ class HellowWorldGTK:
             self.Set_Font_Text_Button('f6','F6 \nГрафика\n')
             self.Set_Font_Text_Button('f7','F7 \nСервис\n')
             self.Set_Font_Text_Button('f8','F8 \nСистема\n')
+            self.Set_Font_Text_Button('f9','\nГлавное\nменю')
             self.builder.get_object("notebook1").set_current_page(0)
-
-    
     def on_MainWindow_delete_event(self, widget, event):
         gtk.main_quit()
         
