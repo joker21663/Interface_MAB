@@ -55,8 +55,6 @@ class HellowWorldGTK:
         self.builder.get_object("label9").modify_font(lABELFont)
         self.builder.get_object("label15").modify_font(lABELFont)
 #        self.builder.get_object("label20").modify_font(lABELFont)
-
-
         self.builder.get_object("ProgName1").modify_font(lABELFont)
         self.builder.get_object("label27").modify_font(lABELFont)
         self.builder.get_object("label28").modify_font(lABELFont)
@@ -64,15 +62,11 @@ class HellowWorldGTK:
         self.builder.get_object("label24").modify_font(lABELFont)
         self.builder.get_object("label25").modify_font(lABELFont)
         self.builder.get_object("label26").modify_font(lABELFont)
-        
-        
 #- Устанавливаем акселераторы которые не смог гладе 
         agroup = gtk.AccelGroup()
         self.window.add_accel_group(agroup)
         knn=self.builder.get_object("f9")
         knn.add_accelerator("clicked",agroup,gtk.keysyms.Escape, 0, 0)
-
-        
 #- Устанавливаем шрифты и все что не смог гладе       
         self.window.show()
         self.Click_Button_panel(self.builder.get_object('f9'))
@@ -206,7 +200,9 @@ class HellowWorldGTK:
             dialog.destroy()
         elif (NameButton.translate(None, string.whitespace).find('F8Выход')==0):
             gtk.main_quit()
-
+        elif (NameButton.translate(None, string.whitespace).find('F7Test')==0):
+            self.status.poll()
+            print self.machine_status
         elif (NameButton.translate(None, string.whitespace).find('F5Редакторпрограмм')==0):
             self.Set_Font_Text_Button('f1','F1 \nВыбор файла\nпрограммы')
             self.Set_Font_Text_Button('f2','F2 \nПоиск')
@@ -225,7 +221,7 @@ class HellowWorldGTK:
             self.Set_Font_Text_Button('f4','F4 \n\n ')
             self.Set_Font_Text_Button('f5','F5 \n\n ')
             self.Set_Font_Text_Button('f6','F6 \n\n ')
-            self.Set_Font_Text_Button('f7','F7 \n\n ')
+            self.Set_Font_Text_Button('f7','F7 \n Test\n')
             self.Set_Font_Text_Button('f8','F8 \nВыход\n')
             self.Set_Font_Text_Button('f9','\nГлавное\nменю')
             self.builder.get_object("notebook1").set_current_page(7)    
