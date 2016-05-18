@@ -10,6 +10,8 @@
     <property name="no_show_all">True</property>
     <property name="title" translatable="yes">МАБ</property>
     <property name="window_position">center-always</property>
+    <property name="destroy_with_parent">True</property>
+    <property name="icon_name">applications-system</property>
     <property name="urgency_hint">True</property>
     <child>
       <object class="GtkVBox" id="vbox1">
@@ -58,6 +60,7 @@
                           <object class="GtkVBox" id="vbox15">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <property name="spacing">2</property>
                             <child>
                               <object class="GtkLabel" id="ProgName1">
                                 <property name="visible">True</property>
@@ -92,15 +95,37 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <child>
-                                      <object class="Combi_DRO" id="combi_dro7">
+                                      <object class="GtkHBox" id="hbox9">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="abs_color">#00000000ffff</property>
-                                        <property name="dtg_color">#ffffffff0000</property>
-                                        <property name="homed_color">#0000ffff0000</property>
-                                        <property name="metric_units">False</property>
-                                        <property name="rel_color">#000000000000</property>
-                                        <property name="unhomed_color">#ffff00000000</property>
+                                        <child>
+                                          <object class="GtkLabel" id="label20">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="xalign">0.43999999761581421</property>
+                                            <property name="label" translatable="yes">X</property>
+                                            <property name="width_chars">1</property>
+                                            <property name="single_line_mode">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">True</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="HAL_DRO" id="hal_dro1">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="label" translatable="yes">label</property>
+                                            <property name="display_units_mm">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">True</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
                                       </object>
                                       <packing>
                                         <property name="expand">True</property>
@@ -109,15 +134,38 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="Combi_DRO" id="combi_dro8">
+                                      <object class="GtkHBox" id="hbox10">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="abs_color">#00000000ffff</property>
-                                        <property name="dtg_color">#ffffffff0000</property>
-                                        <property name="homed_color">#0000ffff0000</property>
-                                        <property name="joint_number">1</property>
-                                        <property name="rel_color">#000000000000</property>
-                                        <property name="unhomed_color">#ffff00000000</property>
+                                        <child>
+                                          <object class="GtkLabel" id="label30">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="xalign">0.44999998807907104</property>
+                                            <property name="label" translatable="yes">Y</property>
+                                            <property name="width_chars">1</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">True</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="HAL_DRO" id="hal_dro2">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="label" translatable="yes">label</property>
+                                            <property name="display_units_mm">True</property>
+                                            <property name="joint_number">1</property>
+                                            <property name="reference_type">1</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">True</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
                                       </object>
                                       <packing>
                                         <property name="expand">True</property>
@@ -126,15 +174,38 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="Combi_DRO" id="combi_dro9">
+                                      <object class="GtkHBox" id="hbox11">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="abs_color">#00000000ffff</property>
-                                        <property name="dtg_color">#ffffffff0000</property>
-                                        <property name="homed_color">#0000ffff0000</property>
-                                        <property name="joint_number">2</property>
-                                        <property name="rel_color">#000000000000</property>
-                                        <property name="unhomed_color">#ffff00000000</property>
+                                        <child>
+                                          <object class="GtkLabel" id="label31">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="xalign">0.44999998807907104</property>
+                                            <property name="yalign">0.50999999046325684</property>
+                                            <property name="label" translatable="yes">Z</property>
+                                            <property name="width_chars">1</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">True</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="HAL_DRO" id="hal_dro3">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="label" translatable="yes">label</property>
+                                            <property name="display_units_mm">True</property>
+                                            <property name="joint_number">2</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">True</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
                                       </object>
                                       <packing>
                                         <property name="expand">True</property>
@@ -304,16 +375,35 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
-                              <object class="Combi_DRO" id="combi_dro10">
+                              <object class="GtkHBox" id="hbox12">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="abs_color">#00000000ffff</property>
-                                <property name="dtg_color">#ffffffff0000</property>
-                                <property name="font_size">15</property>
-                                <property name="homed_color">#0000ffff0000</property>
-                                <property name="metric_units">False</property>
-                                <property name="rel_color">#000000000000</property>
-                                <property name="unhomed_color">#ffff00000000</property>
+                                <child>
+                                  <object class="GtkLabel" id="label32">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">X</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">True</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="HAL_DRO" id="hal_dro4">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">label</property>
+                                    <property name="display_units_mm">True</property>
+                                    <property name="reference_type">1</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">True</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
                               </object>
                               <packing>
                                 <property name="expand">True</property>
@@ -322,16 +412,35 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="Combi_DRO" id="combi_dro11">
+                              <object class="GtkHBox" id="hbox13">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="abs_color">#00000000ffff</property>
-                                <property name="dtg_color">#ffffffff0000</property>
-                                <property name="font_size">15</property>
-                                <property name="homed_color">#0000ffff0000</property>
-                                <property name="joint_number">1</property>
-                                <property name="rel_color">#000000000000</property>
-                                <property name="unhomed_color">#ffff00000000</property>
+                                <child>
+                                  <object class="GtkLabel" id="label33">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">Y</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">True</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="HAL_DRO" id="hal_dro5">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">label</property>
+                                    <property name="display_units_mm">True</property>
+                                    <property name="joint_number">1</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">True</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
                               </object>
                               <packing>
                                 <property name="expand">True</property>
@@ -340,16 +449,36 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="Combi_DRO" id="combi_dro12">
+                              <object class="GtkHBox" id="hbox14">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="abs_color">#00000000ffff</property>
-                                <property name="dtg_color">#ffffffff0000</property>
-                                <property name="font_size">14</property>
-                                <property name="homed_color">#0000ffff0000</property>
-                                <property name="joint_number">2</property>
-                                <property name="rel_color">#000000000000</property>
-                                <property name="unhomed_color">#ffff00000000</property>
+                                <child>
+                                  <object class="GtkLabel" id="label34">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">Z</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">True</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="HAL_DRO" id="hal_dro6">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">label</property>
+                                    <property name="display_units_mm">True</property>
+                                    <property name="joint_number">2</property>
+                                    <property name="reference_type">1</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">True</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
                               </object>
                               <packing>
                                 <property name="expand">True</property>
@@ -402,7 +531,6 @@
                           <object class="GtkTextView" id="textview4">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="wrap_mode">word</property>
                           </object>
                           <packing>
                             <property name="expand">True</property>
@@ -1033,6 +1161,9 @@
                       <object class="GtkTextView" id="textview3">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="can_default">True</property>
+                        <property name="has_default">True</property>
+                        <property name="wrap_mode">word</property>
                         <property name="justification">fill</property>
                         <signal name="move-cursor" handler="on_textview3_move_cursor" swapped="no"/>
                       </object>
@@ -1349,23 +1480,6 @@ AUTO
                 <property name="expand">True</property>
                 <property name="fill">True</property>
                 <property name="position">9</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkToggleButton" id="togglebutton1">
-                <property name="visible">True</property>
-                <property name="sensitive">False</property>
-                <property name="can_focus">False</property>
-                <property name="receives_default">False</property>
-                <property name="use_action_appearance">False</property>
-                <property name="image">image2</property>
-                <property name="relief">none</property>
-                <property name="xalign">0.47999998927116394</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">10</property>
               </packing>
             </child>
           </object>

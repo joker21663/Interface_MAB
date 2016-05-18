@@ -10,12 +10,14 @@ try:
     import gtk
     import gtk.gdk
     import gtk.glade
+    import gobject
     import hal
     import linuxcnc
     import gladevcp.makepins
     import pango
     import string
     import sys,os
+    import math
     from gladevcp.gladebuilder import GladeBuilder
 except:
     sys.exit(1)
@@ -27,16 +29,18 @@ isSelect=False
 
     
 class HellowWorldGTK:
-
-
     def __init__(self):
 #  Константы всякие
-        self.type_gremlin_view = ("X","Y","Z","P")
+        self.type_gremlin_view = ("x","y","z","p")
 
 #  Установка emc       
         self.emc = linuxcnc
         self.status = self.emc.stat()
-        
+        self.command = linuxcnc.command()
+#        inifile = linuxcnc.ini(sys.argv[2])
+#        print inifile
+#        for (gcod) in self.status.gcodes():
+#            print gcod
         self.builder = gtk.Builder()
         BASE = os.path.abspath("/")
         datadir = os.path.join(BASE, "usr", "share", "linuxcnc")
@@ -47,9 +51,10 @@ class HellowWorldGTK:
         self.window = self.builder.get_object("MainWindow")
 #  Установка HAL         
         self.halcomp = hal.component("work")
+        self.halcomp.ready()
         self.machine_status = 0
 #+ Устанавливаем шрифты и все что не смог гладе
-        lABELFont = pango.FontDescription("Tahoma 24")
+        lABELFont = pango.FontDescription("Tahoma 20")
         self.builder.get_object("ProgName").modify_font(lABELFont)
         self.builder.get_object("label4").modify_font(lABELFont)
         self.builder.get_object("label5").modify_font(lABELFont)
@@ -66,6 +71,19 @@ class HellowWorldGTK:
         self.builder.get_object("label24").modify_font(lABELFont)
         self.builder.get_object("label25").modify_font(lABELFont)
         self.builder.get_object("label26").modify_font(lABELFont)
+        self.builder.get_object("label20").modify_font(lABELFont)
+        self.builder.get_object("label30").modify_font(lABELFont)
+        self.builder.get_object("label31").modify_font(lABELFont)
+        self.builder.get_object("label32").modify_font(lABELFont)
+        self.builder.get_object("label33").modify_font(lABELFont)
+        self.builder.get_object("label34").modify_font(lABELFont)        
+        self.builder.get_object("hal_dro6").modify_font(lABELFont)
+        self.builder.get_object("hal_dro5").modify_font(lABELFont)
+        self.builder.get_object("hal_dro4").modify_font(lABELFont)
+        self.builder.get_object("hal_dro3").modify_font(lABELFont)
+        self.builder.get_object("hal_dro2").modify_font(lABELFont)        
+        self.builder.get_object("hal_dro1").modify_font(lABELFont)
+        self.gremlin = self.builder.get_object("hal_gremlin1")
 #- Устанавливаем акселераторы которые не смог гладе 
         agroup = gtk.AccelGroup()
         self.window.add_accel_group(agroup)
@@ -77,7 +95,7 @@ class HellowWorldGTK:
 #+ Тэг на выделение
         self.Tag = self.builder.get_object("textview3").get_buffer().create_tag("Selected",background='yellow',size_points=24.0)
 #- Тэг на выделение 
-        
+        self.timelock()      
         
 #        panel = gladevcp.makepins.GladePanel( halcomp, "work.glade", self.builder, None)
  #       halcomp.ready()
@@ -89,6 +107,43 @@ class HellowWorldGTK:
 #         halcomp = hal.component("face1")
 #         self.glade.connect_signals(self)
 #         self.glade.get_object("MainWindow").show_all()
+    def timelock(self):
+        gobject.timeout_add(100, self.periodic) 
+
+    def godeTosrting(self,tuplecode,litera,dop):
+        gcodestext=''
+        i=0
+        for (gcod) in tuplecode:
+            if(gcod*dop>0):
+                if (i==5):
+                    gcodestext=gcodestext+'\n' 
+                    i=0
+                codd=math.modf(gcod*dop)
+                if (codd[0]>0):
+                    gcodestext=gcodestext+litera+'%.1f'%(gcod*dop)+', '
+                else:
+                    gcodestext=gcodestext+litera+'%d'%int(gcod*dop)+', ' 
+                i=i+1
+        if (litera=='M' and tuplecode.index(0)>=0): 
+            gcodestext=gcodestext+litera+'0'+', '       
+
+        return  gcodestext       
+
+    def periodic(self): # обновляем значения интерфейса
+        self.status.poll()
+        GcodeView=self.builder.get_object("textview4").get_buffer()
+        GcodeView.set_text(self.godeTosrting(self.status.gcodes,'G',0.1))
+        McodeView=self.builder.get_object("textview5").get_buffer()
+        McodeView.set_text(self.godeTosrting(self.status.mcodes,'M',1))
+        self.builder.get_object("label24").set_label('T'+str(self.status.tool_in_spindle))
+        self.builder.get_object("label25").set_label('S'+str(int(self.status.spindle_speed)))
+        self.builder.get_object("label26").set_label('F'+str(int(self.status.feedrate)))
+        tgg=os.path.split(self.status.file)
+        self.builder.get_object("ProgName1").set_label(tgg[1])
+        gobject.timeout_add(100, self.periodic)
+
+
+
     def Set_Font_Text_Button(self,widget,text):
         obj=self.builder.get_object(widget)
         obj.set_label(text)
@@ -198,6 +253,7 @@ class HellowWorldGTK:
 #                print("Было прочитано:")
 #                print(my_string)
                 my_file.close()
+                self.command.program_open(dialog.get_filename())
 #                print dialog.get_filename(), 'selected'
 #            elif response == gtk.RESPONSE_CANCEL:
 #                print 'Closed, no files selected'
@@ -208,9 +264,10 @@ class HellowWorldGTK:
             self.status.poll()
             print self.machine_status
         elif (NameButton.translate(None, string.whitespace).find('F1СменитьВид')==0):
-            gremlin=self.builder.get_object("hal_gremlin1")
-            gremlin.set_property('view',"X")
-            print self.type_gremlin_view.index("P")    
+            index = self.type_gremlin_view.index(self.gremlin.get_property('view'))+1
+            if (index>3):
+                index=0
+            self.gremlin.set_property('view',self.type_gremlin_view[index])
         elif (NameButton.translate(None, string.whitespace).find('F5Редакторпрограмм')==0):
             self.Set_Font_Text_Button('f1','F1 \nВыбор файла\nпрограммы')
             self.Set_Font_Text_Button('f2','F2 \nПоиск')
@@ -286,9 +343,8 @@ class HellowWorldGTK:
         self.notebook.prev_page()
 #        self.notebook.set_current_page(self.notebook.get_current_page()-1)   
     
-    def helloWorld(self, widget):
-        
-        gtk.main_quit()
+#    def helloWorld(self, widget):
+#       gtk.main_quit()
 #         print(self)
 #         print(widget)
 #         self.glade.get_object("label1").set_text('Ебана в рот')
