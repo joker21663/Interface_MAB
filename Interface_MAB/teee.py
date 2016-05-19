@@ -240,10 +240,6 @@ class HellowWorldGTK:
             self.textbuffer.select_range(self.textbuffer.get_iter_at_offset(first_position),self.textbuffer.get_iter_at_offset(last_position))   
             self.textbuffer.cut_clipboard(gtk.clipboard_get("CLIPBOARD"),True)
 #            self.textbuffer.delete_selection(True,True)    
-        elif (NameButton.translate(None, string.whitespace).find('F7Вставить')==0): 
-            isSelect=False
-            self.textbuffer = self.builder.get_object("textview3").get_buffer() 
-            self.textbuffer.paste_clipboard(gtk.clipboard_get("CLIPBOARD"),None,True)
         elif (NameButton.translate(None, string.whitespace).find('F1Выборфайлапрограммы')==0): 
             self.Fileprogramm = self.builder.get_object("vcp_filechooserbutton1")
             dialog = gtk.FileChooserDialog("Выбор файла программы..",None,gtk.FILE_CHOOSER_ACTION_OPEN,(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN, gtk.RESPONSE_OK))
@@ -317,7 +313,38 @@ class HellowWorldGTK:
             self.gremlin_x=self.gremlin_x
             self.gremlin_y=self.gremlin_y-5
             self.gremlin.pan(self.gremlin_x,self.gremlin_y)
-        elif (NameButton.translate(None, string.whitespace).find('F5Редакторпрограмм')==0):
+        elif (NameButton.translate(None, string.whitespace).find('F3Вставить(')==0):
+            self.textbuffer = self.builder.get_object("textview3").get_buffer()
+            self.textbuffer.insert_at_cursor('(')
+        elif (NameButton.translate(None, string.whitespace).find('F4Вставить)')==0):
+            self.textbuffer = self.builder.get_object("textview3").get_buffer()
+            self.textbuffer.insert_at_cursor(')')        
+        elif (NameButton.translate(None, string.whitespace).find('F5Вставить.')==0):
+            self.textbuffer = self.builder.get_object("textview3").get_buffer()
+            self.textbuffer.insert_at_cursor('.')        
+        elif (NameButton.translate(None, string.whitespace).find('F6Вставить,')==0):
+            self.textbuffer = self.builder.get_object("textview3").get_buffer()
+            self.textbuffer.insert_at_cursor(',')        
+        elif (NameButton.translate(None, string.whitespace).find('F7Вставить+')==0):
+            self.textbuffer = self.builder.get_object("textview3").get_buffer()
+            self.textbuffer.insert_at_cursor('+')
+        elif (NameButton.translate(None, string.whitespace).find('F7Вставить')==0): 
+            isSelect=False
+            self.textbuffer = self.builder.get_object("textview3").get_buffer() 
+            self.textbuffer.paste_clipboard(gtk.clipboard_get("CLIPBOARD"),None,True)            
+        elif (NameButton.translate(None, string.whitespace).find('F4Допклавиши')==0): 
+            self.Set_Font_Text_Button('f1','F1 \nВыбор файла\nпрограммы')
+            self.Set_Font_Text_Button('f2','F2 \nПоиск')
+            self.Set_Font_Text_Button('f3','F3 \nВставить\n (')
+            self.Set_Font_Text_Button('f4','F4 \nВставить\n )')
+            self.Set_Font_Text_Button('f5','F5 \nВставить\n .')
+            self.Set_Font_Text_Button('f6','F6 \nВставить\n ,')
+            self.Set_Font_Text_Button('f7','F7 \nВставить\n +')
+            self.Set_Font_Text_Button('f8','F8 \nНазад\nв редактор')
+            self.Set_Font_Text_Button('f9','\nГлавное\nменю')
+            self.builder.get_object("notebook1").set_current_page(5)
+            self.builder.get_object("textview3").grab_focus();
+        elif (NameButton.translate(None, string.whitespace).find('F3ФункцииРедактора')==0): 
             self.Set_Font_Text_Button('f1','F1 \nВыбор файла\nпрограммы')
             self.Set_Font_Text_Button('f2','F2 \nПоиск')
             self.Set_Font_Text_Button('f3','F3 \nНачать\nвыделение')
@@ -325,9 +352,22 @@ class HellowWorldGTK:
             self.Set_Font_Text_Button('f5','F5 \nСкопировать\n')
             self.Set_Font_Text_Button('f6','F6 \nВырезать\n ')
             self.Set_Font_Text_Button('f7','F7 \nВставить\n')
+            self.Set_Font_Text_Button('f8','F8 \nНазад\nв редактор')
+            self.Set_Font_Text_Button('f9','\nГлавное\nменю')
+            self.builder.get_object("notebook1").set_current_page(5)
+            self.builder.get_object("textview3").grab_focus(); 
+        elif (NameButton.translate(None, string.whitespace).find('F5Редакторпрограмм')==0 or NameButton.translate(None, string.whitespace).find('F8Назадвредактор')==0):
+            self.Set_Font_Text_Button('f1','F1 \nВыбор файла\nпрограммы')
+            self.Set_Font_Text_Button('f2','F2 \nПоиск')
+            self.Set_Font_Text_Button('f3','F3 \nФункции\nРедактора')
+            self.Set_Font_Text_Button('f4','F4 \nДоп\nклавиши')
+            self.Set_Font_Text_Button('f5','F5 \nСохранить\nпрограмму')
+            self.Set_Font_Text_Button('f6','F6 \n\n ')
+            self.Set_Font_Text_Button('f7','F7 \n\n')
             self.Set_Font_Text_Button('f8','F8 \nГрафика\n')
             self.Set_Font_Text_Button('f9','\nГлавное\nменю')
             self.builder.get_object("notebook1").set_current_page(5)
+            self.builder.get_object("textview3").grab_focus(); 
         elif (NameButton.translate(None, string.whitespace).find('F7Сервис')==0):
             self.Set_Font_Text_Button('f1','F1 \n\n')
             self.Set_Font_Text_Button('f2','F2 \n\n')
