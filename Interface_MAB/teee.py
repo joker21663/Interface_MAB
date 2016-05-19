@@ -37,6 +37,10 @@ class HellowWorldGTK:
         self.emc = linuxcnc
         self.status = self.emc.stat()
         self.command = linuxcnc.command()
+# сразу включаем станок 
+        self.command.state(linuxcnc.STATE_ESTOP_RESET)
+        self.command.state(linuxcnc.STATE_ON)
+        self.jog_distance=0
 #        inifile = linuxcnc.ini(sys.argv[2])
 #        print inifile
 #        for (gcod) in self.status.gcodes():
@@ -98,8 +102,26 @@ class HellowWorldGTK:
         self.window.add_accel_group(agroup)
         knn=self.builder.get_object("f9")
         knn.add_accelerator("clicked",agroup,gtk.keysyms.Escape, 0, 0)
+#        knn=self.builder.get_object("x+")
+#        print knn
+#        knn.add_accelerator("clicked",agroup,ord('F9'), 0, 0)
+#        knn.add_accelerator("clicked",agroup,gtk.gdk.keyval_from_name('g'), 0, 0)
 #- Устанавливаем шрифты и все что не смог гладе       
+        self.default_style_button = self.builder.get_object("f1").get_style().copy()
+        map = self.builder.get_object("f1").get_colormap() 
+        color = map.alloc_color("green")
+        style = self.builder.get_object("f1").get_style().copy()
+        style.bg[gtk.STATE_NORMAL] = color
+        self.gren_style_button=style
+        i=1
+        while i<10:
+           self.builder.get_object('f'+str(i)).set_style(self.default_style_button)
+           i=i+1 
+
+
         self.window.show()
+#        self.builder.get_object('hidenButton').hide()
+        self.builder.get_object('hidenButton').show()
         self.Click_Button_panel(self.builder.get_object('f9'))
 #+ Тэг на выделение
         self.Tag = self.builder.get_object("textview3").get_buffer().create_tag("Selected",background='yellow',size_points=24.0)
@@ -180,12 +202,44 @@ class HellowWorldGTK:
             self.textbuffer.apply_tag_by_name("Selected",self.textbuffer.get_iter_at_offset(first_position),self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position))
             last_position = self.textbuffer.props.cursor_position
 #       print (self.textbuffer.props.cursor_position)
+    def set_color_button(self):
+        self.builder.get_object("f3").set_style(self.default_style_button)
+        self.builder.get_object("f4").set_style(self.default_style_button)
+        self.builder.get_object("f5").set_style(self.default_style_button)
+        self.builder.get_object('hidenButton').hide()
+        if (self.jog_distance==0.001):
+            self.builder.get_object("f3").set_style(self.gren_style_button) 
+            self.builder.get_object('hidenButton').show()
+        if (self.jog_distance==0.01):
+            self.builder.get_object("f4").set_style(self.gren_style_button) 
+            self.builder.get_object('hidenButton').show()
+        if (self.jog_distance==0.1):
+            self.builder.get_object("f5").set_style(self.gren_style_button)
+            self.builder.get_object('hidenButton').show()
+         
 
-        
+    def Jog_Operation(self, widget):
+        NameButton = widget.get_label()
+        NameButton =NameButton.translate(None, string.whitespace)
+        if (NameButton=="x+"):
+            self.command.jog(linuxcnc.JOG_INCREMENT, 0, 5, self.jog_distance)
+        if (NameButton=="x-"):
+            self.command.jog(linuxcnc.JOG_INCREMENT, 0, 5, -self.jog_distance)
+        if (NameButton=="y+"):
+            self.command.jog(linuxcnc.JOG_INCREMENT, 1, 5, self.jog_distance) 
+        if (NameButton=="y-"):
+            self.command.jog(linuxcnc.JOG_INCREMENT, 1, 5, -self.jog_distance) 
+        if (NameButton=="z+"):
+            self.command.jog(linuxcnc.JOG_INCREMENT, 2, 5, self.jog_distance) 
+        if (NameButton=="z-"):
+            self.command.jog(linuxcnc.JOG_INCREMENT, 2, 5, -self.jog_distance) 
+
+
     def Click_Button_panel(self, widget):
         #+ Подкаждую закладку меняем кнопки
         global first_position
         global isSelect
+
         NameButton = widget.get_label()
         if (NameButton.translate(None, string.whitespace).find('F3Начатьвыделение')==0):
             self.textbuffer = self.builder.get_object("textview3").get_buffer()
@@ -281,7 +335,7 @@ class HellowWorldGTK:
         elif (NameButton.translate(None, string.whitespace).find('F8Выход')==0):
             gtk.main_quit()
         elif (NameButton.translate(None, string.whitespace).find('F7Test')==0):
-            self.status.poll()
+            self.command.home(0)
             print self.machine_status
         elif (NameButton.translate(None, string.whitespace).find('F1СменитьВид')==0):
             index = self.type_gremlin_view.index(self.gremlin.get_property('view'))+1
@@ -331,7 +385,34 @@ class HellowWorldGTK:
         elif (NameButton.translate(None, string.whitespace).find('F7Вставить')==0): 
             isSelect=False
             self.textbuffer = self.builder.get_object("textview3").get_buffer() 
-            self.textbuffer.paste_clipboard(gtk.clipboard_get("CLIPBOARD"),None,True)            
+            self.textbuffer.paste_clipboard(gtk.clipboard_get("CLIPBOARD"),None,True)
+        elif (NameButton.translate(None, string.whitespace).find('F30.001')==0): 
+            if(self.jog_distance==0.001):
+                self.jog_distance=0
+            else:    
+                self.jog_distance=0.001
+            self.set_color_button()
+        elif (NameButton.translate(None, string.whitespace).find('F40.01')==0): 
+            if(self.jog_distance==0.01):
+                self.jog_distance=0
+            else:    
+                self.jog_distance=0.01
+            self.set_color_button()
+        elif (NameButton.translate(None, string.whitespace).find('F50.1')==0): 
+            if(self.jog_distance==0.1):
+                self.jog_distance=0
+            else:    
+                self.jog_distance=0.1
+            self.set_color_button()
+        elif (NameButton.translate(None, string.whitespace).find('F6Вращениешпинделявправо')==0):
+            self.command.spindle(linuxcnc.SPINDLE_FORWARD)
+
+        elif (NameButton.translate(None, string.whitespace).find('F7Стопшпиндель')==0):
+            self.command.spindle(linuxcnc.SPINDLE_OFF)
+
+        elif (NameButton.translate(None, string.whitespace).find('F8Вращениешпинделявлево')==0):
+            self.command.spindle(linuxcnc.SPINDLE_REVERSE)
+
         elif (NameButton.translate(None, string.whitespace).find('F4Допклавиши')==0): 
             self.Set_Font_Text_Button('f1','F1 \nВыбор файла\nпрограммы')
             self.Set_Font_Text_Button('f2','F2 \nПоиск')
@@ -396,12 +477,14 @@ class HellowWorldGTK:
             self.Set_Font_Text_Button('f3','F3 \n0.001\n ')
             self.Set_Font_Text_Button('f4','F4 \n0.01\n ')
             self.Set_Font_Text_Button('f5','F5 \n0.1\n')
-            self.Set_Font_Text_Button('f6','F6 \nВращение шпинделя\nвправо')
+            self.Set_Font_Text_Button('f6','F6 \nВращение\nшпинделя\nвправо')
             self.Set_Font_Text_Button('f7','F7 \nСтоп\nшпиндель')
-            self.Set_Font_Text_Button('f8','F8 \nВращение шпинделя\nвлево')
+            self.Set_Font_Text_Button('f8','F8 \nВращение\nшпинделя\nвлево')
             self.Set_Font_Text_Button('f9','\nГлавное\nменю')
             self.builder.get_object("notebook1").set_current_page(0)        
         else:
+            self.jog_distance=0
+            self.set_color_button()
             self.Set_Font_Text_Button('f1','F1 \nРучное \nУправление')
             self.Set_Font_Text_Button('f2','F2 \nAUTO\n')
             self.Set_Font_Text_Button('f3','F3 \nНоль Детали\n')
