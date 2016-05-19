@@ -66,23 +66,29 @@ class HellowWorldGTK:
 #        self.builder.get_object("label20").modify_font(lABELFont)
         self.builder.get_object("ProgName1").modify_font(lABELFont)
         self.builder.get_object("label27").modify_font(lABELFont)
-        self.builder.get_object("label28").modify_font(lABELFont)
-        self.builder.get_object("label29").modify_font(lABELFont)
         self.builder.get_object("label24").modify_font(lABELFont)
         self.builder.get_object("label25").modify_font(lABELFont)
         self.builder.get_object("label26").modify_font(lABELFont)
-        self.builder.get_object("label20").modify_font(lABELFont)
-        self.builder.get_object("label30").modify_font(lABELFont)
-        self.builder.get_object("label31").modify_font(lABELFont)
+        lABELFont = pango.FontDescription("Tahoma 15")
+        self.builder.get_object("label28").modify_font(lABELFont)
+        self.builder.get_object("label29").modify_font(lABELFont)
+
+        self.Set_Big_Fat(self.builder.get_object("label20"))
+        self.Set_Big_Fat(self.builder.get_object("label30"))
+        self.Set_Big_Fat(self.builder.get_object("label31"))
+        self.Set_Big_Fat(self.builder.get_object("label31"))
+        self.Set_Big_Fat(self.builder.get_object("label31"))
+        self.Set_Big_Fat(self.builder.get_object("label35"))
+        self.Set_Big_Fat(self.builder.get_object("label36"))
+        self.Set_Big_Fat(self.builder.get_object("label37"))
+
+
         self.builder.get_object("label32").modify_font(lABELFont)
         self.builder.get_object("label33").modify_font(lABELFont)
         self.builder.get_object("label34").modify_font(lABELFont)        
         self.builder.get_object("hal_dro6").modify_font(lABELFont)
         self.builder.get_object("hal_dro5").modify_font(lABELFont)
         self.builder.get_object("hal_dro4").modify_font(lABELFont)
-        self.builder.get_object("hal_dro3").modify_font(lABELFont)
-        self.builder.get_object("hal_dro2").modify_font(lABELFont)        
-        self.builder.get_object("hal_dro1").modify_font(lABELFont)
         self.gremlin = self.builder.get_object("hal_gremlin1")
 #- Устанавливаем акселераторы которые не смог гладе 
         agroup = gtk.AccelGroup()
@@ -140,8 +146,19 @@ class HellowWorldGTK:
         self.builder.get_object("label26").set_label('F'+str(int(self.status.feedrate)))
         tgg=os.path.split(self.status.file)
         self.builder.get_object("ProgName1").set_label(tgg[1])
+        pos=self.status.actual_position
+        self.builder.get_object("label35").set_text('%.3f'%(pos[0]))
+        self.builder.get_object("label36").set_text('%.3f'%(pos[1]))
+        self.builder.get_object("label37").set_text('%.3f'%(pos[2]))
+        self.Set_Big_Fat(self.builder.get_object("label35"))
+        self.Set_Big_Fat(self.builder.get_object("label36"))
+        self.Set_Big_Fat(self.builder.get_object("label37"))
         gobject.timeout_add(100, self.periodic)
-
+    
+    def Set_Big_Fat(self,widget):
+        widget.set_use_markup(gtk.TRUE)
+        widget.set_markup('<span font="40" font_weight="heavy">'+widget.get_text()+'</span>')
+    
 
 
     def Set_Font_Text_Button(self,widget,text):
