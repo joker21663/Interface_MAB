@@ -37,6 +37,7 @@ class HellowWorldGTK:
         self.emc = linuxcnc
         self.status = self.emc.stat()
         self.command = linuxcnc.command()
+        self.error_channel = linuxcnc.error_channel()
 # сразу включаем станок 
         self.command.state(linuxcnc.STATE_ESTOP_RESET)
         self.command.state(linuxcnc.STATE_ON)
@@ -161,6 +162,7 @@ class HellowWorldGTK:
         return  gcodestext       
 
     def periodic(self): # обновляем значения интерфейса
+# обновляем параметры на форме
         self.status.poll()
         GcodeView=self.builder.get_object("textview4").get_buffer()
         GcodeView.set_text(self.godeTosrting(self.status.gcodes,'G',0.1))
@@ -178,6 +180,22 @@ class HellowWorldGTK:
         self.Set_Big_Fat(self.builder.get_object("label35"))
         self.Set_Big_Fat(self.builder.get_object("label36"))
         self.Set_Big_Fat(self.builder.get_object("label37"))
+# канал ошибок
+        error = self.error_channel.poll()
+        if error:
+           kind, text = error
+           if kind in (linuxcnc.NML_ERROR, linuxcnc.OPERATOR_ERROR):
+            typus = "error"
+            parent = None
+            md = gtk.MessageDialog(parent, 
+            gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_ERROR, 
+            gtk.BUTTONS_CLOSE, text)
+            md.run()
+            md.destroy()
+            print typus, text 
+           else:
+            typus = "info"
+            print text 
         gobject.timeout_add(100, self.periodic)
     
     def Set_Big_Fat(self,widget):
@@ -233,8 +251,22 @@ class HellowWorldGTK:
             self.command.jog(linuxcnc.JOG_INCREMENT, 2, 5, self.jog_distance) 
         if (NameButton=="z-"):
             self.command.jog(linuxcnc.JOG_INCREMENT, 2, 5, -self.jog_distance) 
-
-
+    
+    def MDI_Click_button(self, widget):
+        NameButton = widget.get_label()
+        if (NameButton.translate(None, string.whitespace).find('F1Выполнить')==0):   
+           self.command.mode(linuxcnc.MODE_MDI)           
+           buff=self.builder.get_object("textview6").get_buffer()
+           self.command.mdi(buff.get_text(buff.get_start_iter(),buff.get_end_iter()))
+           self.command.mode(linuxcnc.MODE_MANUAL) 
+           self.builder.get_object("textview6").grab_focus();
+           self.MDIWindows.hide()
+        elif (NameButton.translate(None, string.whitespace).find('F2Отмена')==0): 
+            self.MDIWindows.hide()
+        elif (NameButton.translate(None, string.whitespace).find('F3Удалитьсимвол')==0):
+            buff=self.builder.get_object("textview6").get_buffer()
+            txtB=buff.get_text(buff.get_start_iter(),buff.get_end_iter())
+            buff.set_text(txtB[0:len(txtB)-1])
     def Click_Button_panel(self, widget):
         #+ Подкаждую закладку меняем кнопки
         global first_position
@@ -412,6 +444,14 @@ class HellowWorldGTK:
 
         elif (NameButton.translate(None, string.whitespace).find('F8Вращениешпинделявлево')==0):
             self.command.spindle(linuxcnc.SPINDLE_REVERSE)
+        
+        elif (NameButton.translate(None, string.whitespace).find('F1MDIРучнойнабор')==0):
+            self.MDIWindows = self.builder.get_object("MDI")
+            self.Set_Font_Text_Button('button1','F1 \nВыполнить\n')
+            self.Set_Font_Text_Button('button2','F2 \nОтмена\n')
+            self.Set_Font_Text_Button('button3','F3 \nУдалить символ\n')            
+            self.MDIWindows.show()
+            self.builder.get_object("textview6").grab_focus();
 
         elif (NameButton.translate(None, string.whitespace).find('F4Допклавиши')==0): 
             self.Set_Font_Text_Button('f1','F1 \nВыбор файла\nпрограммы')
