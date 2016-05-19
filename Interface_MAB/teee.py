@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*
+# -*- coding: utf-8 -* 
 import sys
 try:
      import pygtk
@@ -90,6 +90,9 @@ class HellowWorldGTK:
         self.builder.get_object("hal_dro5").modify_font(lABELFont)
         self.builder.get_object("hal_dro4").modify_font(lABELFont)
         self.gremlin = self.builder.get_object("hal_gremlin1")
+        self.gremlin.set_property('metric_units',True)
+        self.gremlin_x=0
+        self.gremlin_y=0
 #- Устанавливаем акселераторы которые не смог гладе 
         agroup = gtk.AccelGroup()
         self.window.add_accel_group(agroup)
@@ -201,6 +204,7 @@ class HellowWorldGTK:
             self.Set_Font_Text_Button('cancel','F2 \nОтмена\n')
             self.findwindow.show()
         elif (NameButton.translate(None, string.whitespace).find('F1Поиск')==0): 
+            self.builder.get_object("entry1").grab_focus(); 
             findtext=self.builder.get_object("entry1").get_text()
             self.textbuffer = self.builder.get_object("textview3").get_buffer()
             textToFind=self.textbuffer.get_text(self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position), self.textbuffer.get_iter_at_offset(self.textbuffer.get_char_count()), True)
@@ -209,14 +213,17 @@ class HellowWorldGTK:
                 self.textbuffer.remove_all_tags(self.textbuffer.get_iter_at_offset(0),self.textbuffer.get_iter_at_offset(self.textbuffer.get_char_count()))
                 self.textbuffer.apply_tag(self.Tag,self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position+index),self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position+index+len(findtext)))
                 self.textbuffer.select_range(self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position+index), self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position+index))
+                self.findwindow.hide()
+                self.builder.get_object("textview3").scroll_to_iter (self.textbuffer.get_iter_at_offset(self.textbuffer.props.cursor_position+index), 0.0, False, 0, 0);
             else:
+                self.findwindow.hide()
                 parent = None
                 md = gtk.MessageDialog(parent, 
                 gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO, 
                 gtk.BUTTONS_CLOSE, "Ничего не найдено")
                 md.run()
                 md.destroy()
-            self.findwindow.hide()
+            self.builder.get_object("textview3").grab_focus();    
         elif (NameButton.translate(None, string.whitespace).find('F2Отмена')==0): 
             self.findwindow.hide()
         elif (NameButton.translate(None, string.whitespace).find('F4Закончитьвыделение')==0): 
@@ -285,6 +292,31 @@ class HellowWorldGTK:
             if (index>3):
                 index=0
             self.gremlin.set_property('view',self.type_gremlin_view[index])
+        elif (NameButton.translate(None, string.whitespace).find('F2ВключитьВыключитьDRO')==0):
+            if (self.gremlin.get_property('enable_dro')==0):
+                self.gremlin.set_property('enable_dro',(1))
+            else:
+                self.gremlin.set_property('enable_dro',(0))
+        elif (NameButton.translate(None, string.whitespace).find('F3Приблизить')==0):
+            self.gremlin.zoom_in()
+        elif (NameButton.translate(None, string.whitespace).find('F4Удалить')==0):
+            self.gremlin.zoom_out()
+        elif (NameButton.translate(None, string.whitespace).find('F5Вправо')==0):
+            self.gremlin_x=self.gremlin_x+5
+            self.gremlin_y=self.gremlin_y
+            self.gremlin.pan(self.gremlin_x,self.gremlin_y)
+        elif (NameButton.translate(None, string.whitespace).find('F6Лево')==0):
+            self.gremlin_x=self.gremlin_x-5
+            self.gremlin_y=self.gremlin_y
+            self.gremlin.pan(self.gremlin_x,self.gremlin_y)
+        elif (NameButton.translate(None, string.whitespace).find('F7Вверх')==0):
+            self.gremlin_x=self.gremlin_x
+            self.gremlin_y=self.gremlin_y+5
+            self.gremlin.pan(self.gremlin_x,self.gremlin_y)
+        elif (NameButton.translate(None, string.whitespace).find('F8Вниз')==0):
+            self.gremlin_x=self.gremlin_x
+            self.gremlin_y=self.gremlin_y-5
+            self.gremlin.pan(self.gremlin_x,self.gremlin_y)
         elif (NameButton.translate(None, string.whitespace).find('F5Редакторпрограмм')==0):
             self.Set_Font_Text_Button('f1','F1 \nВыбор файла\nпрограммы')
             self.Set_Font_Text_Button('f2','F2 \nПоиск')
@@ -293,29 +325,29 @@ class HellowWorldGTK:
             self.Set_Font_Text_Button('f5','F5 \nСкопировать\n')
             self.Set_Font_Text_Button('f6','F6 \nВырезать\n ')
             self.Set_Font_Text_Button('f7','F7 \nВставить\n')
-            self.Set_Font_Text_Button('f8','F8 \n\nГрафика\n')
+            self.Set_Font_Text_Button('f8','F8 \nГрафика\n')
             self.Set_Font_Text_Button('f9','\nГлавное\nменю')
             self.builder.get_object("notebook1").set_current_page(5)
         elif (NameButton.translate(None, string.whitespace).find('F7Сервис')==0):
             self.Set_Font_Text_Button('f1','F1 \n\n')
             self.Set_Font_Text_Button('f2','F2 \n\n')
-            self.Set_Font_Text_Button('f3','F3 \n\n ')
-            self.Set_Font_Text_Button('f4','F4 \n\n ')
-            self.Set_Font_Text_Button('f5','F5 \n\n ')
-            self.Set_Font_Text_Button('f6','F6 \n\n ')
+            self.Set_Font_Text_Button('f3','F3 \n\n')
+            self.Set_Font_Text_Button('f4','F4 \n\n')
+            self.Set_Font_Text_Button('f5','F5 \n\n')
+            self.Set_Font_Text_Button('f6','F6 \n\n')
             self.Set_Font_Text_Button('f7','F7 \n Test\n')
             self.Set_Font_Text_Button('f8','F8 \nВыход\n')
             self.Set_Font_Text_Button('f9','\nГлавное\nменю')
             self.builder.get_object("notebook1").set_current_page(7)    
         elif (NameButton.translate(None, string.whitespace).find('F6Графика')==0 or NameButton.translate(None, string.whitespace).find('F8Графика')==0):
             self.Set_Font_Text_Button('f1','F1 \nСменить\nВид')
-            self.Set_Font_Text_Button('f2','F2 \n\n')
-            self.Set_Font_Text_Button('f3','F3 \n\n ')
-            self.Set_Font_Text_Button('f4','F4 \n\n ')
-            self.Set_Font_Text_Button('f5','F5 \n\n ')
-            self.Set_Font_Text_Button('f6','F6 \n\n ')
-            self.Set_Font_Text_Button('f7','F7 \n\n ')
-            self.Set_Font_Text_Button('f8','F8 \n\n\n')
+            self.Set_Font_Text_Button('f2','F2 \nВключить\nВыключить DRO')
+            self.Set_Font_Text_Button('f3','F3 \nПриблизить\n ')
+            self.Set_Font_Text_Button('f4','F4 \nУдалить\n ')
+            self.Set_Font_Text_Button('f5','F5 \nВправо\n ')
+            self.Set_Font_Text_Button('f6','F6 \nЛево\n ')
+            self.Set_Font_Text_Button('f7','F7 \nВверх\n ')
+            self.Set_Font_Text_Button('f8','F8 \nВниз\n')
             self.Set_Font_Text_Button('f9','\nГлавное\nменю')
             self.builder.get_object("notebook1").set_current_page(6)   
         elif (NameButton.translate(None, string.whitespace).find('F1РучноеУправление')==0):

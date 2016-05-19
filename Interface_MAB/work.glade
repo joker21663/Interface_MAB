@@ -1490,9 +1490,10 @@ AUTO
   </object>
   <object class="GtkWindow" id="findwindow">
     <property name="can_focus">False</property>
+    <property name="type">popup</property>
     <property name="title" translatable="yes">Введите строку поиска</property>
     <property name="modal">True</property>
-    <property name="window_position">center-on-parent</property>
+    <property name="window_position">center-always</property>
     <property name="destroy_with_parent">True</property>
     <child>
       <object class="GtkVBox" id="vbox13">

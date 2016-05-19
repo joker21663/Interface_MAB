@@ -1,0 +1,1054 @@
+Help on class HAL_Gremlin in gladevcp.hal_gremlin:
+
+gladevcp.hal_gremlin.HAL_Gremlin = class HAL_Gremlin(gremlin.Gremlin, gladevcp.hal_actions._EMC_ActionBase)
+ |  Method resolution order:
+ |      HAL_Gremlin
+ |      gremlin.Gremlin
+ |      gtk.gtkgl.widget.DrawingArea
+ |      gtk.DrawingArea
+ |      gtk.Widget
+ |      gtk.Object
+ |      gobject._gobject.GObject
+ |      atk.ImplementorIface
+ |      gtk.Buildable
+ |      gobject.GInterface
+ |      gtk.gtkgl.widget.Widget
+ |      __builtin__.object
+ |      glnav.GlNavBase
+ |      rs274.glcanon.GlCanonDraw
+ |      gladevcp.hal_actions._EMC_ActionBase
+ |      gladevcp.hal_widgets._HalWidgetBase
+ |  
+ |  Methods defined here:
+ |  
+ |  __init__(self, *a, **kw)
+ |  
+ |  do_get_property(self, property)
+ |  
+ |  do_set_property(self, property, value)
+ |  
+ |  dro_format(self, s, spd, dtg, limit, homed, positions, axisdtg, g5x_offset, g92_offset, tlo_offset)
+ |      # This overrides glcannon.py method so we can change the DRO
+ |  
+ |  fileloaded(self, w, f)
+ |  
+ |  realize(self, widget)
+ |  
+ |  reloadfile(self, w)
+ |  
+ |  report_gcode_error(self, result, seq, filename)
+ |  
+ |  update_highlight_variable(self, line)
+ |      # Override gremlin's / glcannon.py function so we can emit a GObject signal
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes defined here:
+ |  
+ |  __gtype__ = <GType HAL_Gremlin (160400760)>
+ |  
+ |  __gtype_name__ = 'HAL_Gremlin'
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from gremlin.Gremlin:
+ |  
+ |  activate(self)
+ |  
+ |  clear_live_plotter(self)
+ |  
+ |  continuous_zoom(self, y)
+ |  
+ |  deactivate(self)
+ |  
+ |  expose(self, widget=None, event=None)
+ |  
+ |  get_a_axis_wrapped(self)
+ |  
+ |  get_b_axis_wrapped(self)
+ |  
+ |  get_c_axis_wrapped(self)
+ |  
+ |  get_current_tool(self)
+ |  
+ |  get_font_info(self)
+ |  
+ |  get_geometry(self)
+ |  
+ |  get_grid_size(self)
+ |  
+ |  get_highlight_line(self)
+ |  
+ |  get_joints_mode(self)
+ |  
+ |  get_num_joints(self)
+ |  
+ |  get_program_alpha(self)
+ |  
+ |  get_show_commanded(self)
+ |  
+ |  get_show_distance_to_go(self)
+ |  
+ |  get_show_extents(self)
+ |  
+ |  get_show_limits(self)
+ |  
+ |  get_show_live_plot(self)
+ |  
+ |  get_show_machine_speed(self)
+ |  
+ |  get_show_metric(self)
+ |  
+ |  get_show_offsets(self)
+ |  
+ |  get_show_program(self)
+ |  
+ |  get_show_rapids(self)
+ |  
+ |  get_show_relative(self)
+ |  
+ |  get_show_tool(self)
+ |  
+ |  get_view(self)
+ |  
+ |  is_foam(self)
+ |  
+ |  is_lathe(self)
+ |  
+ |  load(self, filename=None)
+ |  
+ |  map(self, *args)
+ |  
+ |  motion(self, widget, event)
+ |  
+ |  pan(self, x, y)
+ |  
+ |  poll(self)
+ |  
+ |  pressed(self, widget, event)
+ |  
+ |  reshape(self, widget, event)
+ |  
+ |  rotate_view(self, x, y)
+ |  
+ |  scroll(self, widget, event)
+ |  
+ |  select_cancel(self, widget=None, event=None)
+ |  
+ |  select_fire = inner(self, *args, **kw)
+ |  
+ |  select_prime(self, x, y)
+ |  
+ |  set_current_view(self)
+ |  
+ |  set_mouse_start(self, x, y)
+ |  
+ |  set_prime(self, x, y)
+ |  
+ |  start_continuous_zoom(self, y)
+ |  
+ |  swapbuffers(self)
+ |  
+ |  winfo_height(self)
+ |  
+ |  winfo_width(self)
+ |  
+ |  zoom_in(self)
+ |  
+ |  zoom_out(self)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes inherited from gremlin.Gremlin:
+ |  
+ |  rotation_vectors = [(1.0, 0.0, 0.0), (0.0, 0.0, 1.0)]
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from gtk.DrawingArea:
+ |  
+ |  size(...)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from gtk.Widget:
+ |  
+ |  add_accelerator(...)
+ |  
+ |  add_events(...)
+ |  
+ |  add_mnemonic_label(...)
+ |  
+ |  can_activate_accel(...)
+ |  
+ |  child_focus(...)
+ |  
+ |  child_notify(...)
+ |  
+ |  class_path(...)
+ |  
+ |  create_pango_context(...)
+ |  
+ |  create_pango_layout(...)
+ |  
+ |  destroy(...)
+ |  
+ |  do_button_press_event(...)
+ |  
+ |  do_button_release_event(...)
+ |  
+ |  do_can_activate_accel(...)
+ |  
+ |  do_client_event(...)
+ |  
+ |  do_composited_changed(...)
+ |  
+ |  do_configure_event(...)
+ |  
+ |  do_delete_event(...)
+ |  
+ |  do_destroy_event(...)
+ |  
+ |  do_direction_changed(...)
+ |  
+ |  do_drag_begin(...)
+ |  
+ |  do_drag_data_delete(...)
+ |  
+ |  do_drag_data_get(...)
+ |  
+ |  do_drag_data_received(...)
+ |  
+ |  do_drag_drop(...)
+ |  
+ |  do_drag_end(...)
+ |  
+ |  do_drag_leave(...)
+ |  
+ |  do_drag_motion(...)
+ |  
+ |  do_enter_notify_event(...)
+ |  
+ |  do_event(...)
+ |  
+ |  do_expose_event(...)
+ |  
+ |  do_focus(...)
+ |  
+ |  do_focus_in_event(...)
+ |  
+ |  do_focus_out_event(...)
+ |  
+ |  do_get_accessible(...)
+ |  
+ |  do_grab_broken_event(...)
+ |  
+ |  do_grab_focus(...)
+ |  
+ |  do_grab_notify(...)
+ |  
+ |  do_hide(...)
+ |  
+ |  do_hide_all(...)
+ |  
+ |  do_hierarchy_changed(...)
+ |  
+ |  do_key_press_event(...)
+ |  
+ |  do_key_release_event(...)
+ |  
+ |  do_leave_notify_event(...)
+ |  
+ |  do_map(...)
+ |  
+ |  do_map_event(...)
+ |  
+ |  do_mnemonic_activate(...)
+ |  
+ |  do_motion_notify_event(...)
+ |  
+ |  do_no_expose_event(...)
+ |  
+ |  do_parent_set(...)
+ |  
+ |  do_popup_menu(...)
+ |  
+ |  do_property_notify_event(...)
+ |  
+ |  do_proximity_in_event(...)
+ |  
+ |  do_proximity_out_event(...)
+ |  
+ |  do_realize(...)
+ |  
+ |  do_screen_changed(...)
+ |  
+ |  do_scroll_event(...)
+ |  
+ |  do_selection_clear_event(...)
+ |  
+ |  do_selection_get(...)
+ |  
+ |  do_selection_notify_event(...)
+ |  
+ |  do_selection_received(...)
+ |  
+ |  do_selection_request_event(...)
+ |  
+ |  do_show(...)
+ |  
+ |  do_show_all(...)
+ |  
+ |  do_show_help(...)
+ |  
+ |  do_size_allocate(...)
+ |  
+ |  do_size_request(...)
+ |  
+ |  do_state_changed(...)
+ |  
+ |  do_style_set(...)
+ |  
+ |  do_unmap(...)
+ |  
+ |  do_unmap_event(...)
+ |  
+ |  do_unrealize(...)
+ |  
+ |  do_visibility_notify_event(...)
+ |  
+ |  do_window_state_event(...)
+ |  
+ |  drag_begin(...)
+ |  
+ |  drag_check_threshold(...)
+ |  
+ |  drag_dest_add_image_targets(...)
+ |  
+ |  drag_dest_add_text_targets(...)
+ |  
+ |  drag_dest_add_uri_targets(...)
+ |  
+ |  drag_dest_find_target(...)
+ |  
+ |  drag_dest_get_target_list(...)
+ |  
+ |  drag_dest_get_track_motion(...)
+ |  
+ |  drag_dest_set(...)
+ |  
+ |  drag_dest_set_proxy(...)
+ |  
+ |  drag_dest_set_target_list(...)
+ |  
+ |  drag_dest_set_track_motion(...)
+ |  
+ |  drag_dest_unset(...)
+ |  
+ |  drag_get_data(...)
+ |  
+ |  drag_highlight(...)
+ |  
+ |  drag_source_add_image_targets(...)
+ |  
+ |  drag_source_add_text_targets(...)
+ |  
+ |  drag_source_add_uri_targets(...)
+ |  
+ |  drag_source_get_target_list(...)
+ |  
+ |  drag_source_set(...)
+ |  
+ |  drag_source_set_icon(...)
+ |  
+ |  drag_source_set_icon_name(...)
+ |  
+ |  drag_source_set_icon_pixbuf(...)
+ |  
+ |  drag_source_set_icon_stock(...)
+ |  
+ |  drag_source_set_target_list(...)
+ |  
+ |  drag_source_unset(...)
+ |  
+ |  drag_unhighlight(...)
+ |  
+ |  draw(...)
+ |  
+ |  ensure_style(...)
+ |  
+ |  error_bell(...)
+ |  
+ |  event(...)
+ |  
+ |  freeze_child_notify(...)
+ |  
+ |  get_accessible(...)
+ |  
+ |  get_action(...)
+ |  
+ |  get_activate_signal(...)
+ |  
+ |  get_allocation(...)
+ |  
+ |  get_ancestor(...)
+ |  
+ |  get_app_paintable(...)
+ |  
+ |  get_can_default(...)
+ |  
+ |  get_can_focus(...)
+ |  
+ |  get_child_requisition(...)
+ |  
+ |  get_child_visible(...)
+ |  
+ |  get_clipboard(...)
+ |  
+ |  get_colormap(...)
+ |  
+ |  get_composite_name(...)
+ |  
+ |  get_direction(...)
+ |  
+ |  get_display(...)
+ |  
+ |  get_double_buffered(...)
+ |  
+ |  get_events(...)
+ |  
+ |  get_extension_events(...)
+ |  
+ |  get_has_tooltip(...)
+ |  
+ |  get_has_window(...)
+ |  
+ |  get_mapped(...)
+ |  
+ |  get_modifier_style(...)
+ |  
+ |  get_name(...)
+ |  
+ |  get_no_show_all(...)
+ |  
+ |  get_pango_context(...)
+ |  
+ |  get_parent(...)
+ |  
+ |  get_parent_window(...)
+ |  
+ |  get_pointer(...)
+ |  
+ |  get_realized(...)
+ |  
+ |  get_receives_default(...)
+ |  
+ |  get_requisition(...)
+ |  
+ |  get_root_window(...)
+ |  
+ |  get_screen(...)
+ |  
+ |  get_sensitive(...)
+ |  
+ |  get_settings(...)
+ |  
+ |  get_size_request(...)
+ |  
+ |  get_snapshot(...)
+ |  
+ |  get_state(...)
+ |  
+ |  get_style(...)
+ |  
+ |  get_tooltip_markup(...)
+ |  
+ |  get_tooltip_text(...)
+ |  
+ |  get_tooltip_window(...)
+ |  
+ |  get_toplevel(...)
+ |  
+ |  get_visible(...)
+ |  
+ |  get_visual(...)
+ |  
+ |  get_window(...)
+ |  
+ |  grab_add(...)
+ |  
+ |  grab_default(...)
+ |  
+ |  grab_focus(...)
+ |  
+ |  grab_remove(...)
+ |  
+ |  has_default(...)
+ |  
+ |  has_focus(...)
+ |  
+ |  has_grab(...)
+ |  
+ |  has_rc_style(...)
+ |  
+ |  has_screen(...)
+ |  
+ |  hide(...)
+ |  
+ |  hide_all(...)
+ |  
+ |  hide_on_delete(...)
+ |  
+ |  input_shape_combine_mask(...)
+ |  
+ |  intersect(...)
+ |  
+ |  is_ancestor(...)
+ |  
+ |  is_composited(...)
+ |  
+ |  is_drawable(...)
+ |  
+ |  is_focus(...)
+ |  
+ |  is_sensitive(...)
+ |  
+ |  is_toplevel(...)
+ |  
+ |  keynav_failed(...)
+ |  
+ |  list_accel_closures(...)
+ |  
+ |  list_mnemonic_labels(...)
+ |  
+ |  menu_get_for_attach_widget(...)
+ |  
+ |  mnemonic_activate(...)
+ |  
+ |  modify_base(...)
+ |  
+ |  modify_bg(...)
+ |  
+ |  modify_cursor(...)
+ |  
+ |  modify_fg(...)
+ |  
+ |  modify_font(...)
+ |  
+ |  modify_style(...)
+ |  
+ |  modify_text(...)
+ |  
+ |  path(...)
+ |  
+ |  queue_clear(...)
+ |  
+ |  queue_clear_area(...)
+ |  
+ |  queue_draw(...)
+ |  
+ |  queue_draw_area(...)
+ |  
+ |  queue_resize(...)
+ |  
+ |  queue_resize_no_redraw(...)
+ |  
+ |  rc_get_style(...)
+ |  
+ |  region_intersect(...)
+ |  
+ |  remove_accelerator(...)
+ |  
+ |  remove_mnemonic_label(...)
+ |  
+ |  render_icon(...)
+ |  
+ |  reparent(...)
+ |  
+ |  reset_rc_styles(...)
+ |  
+ |  reset_shapes(...)
+ |  
+ |  selection_add_target(...)
+ |  
+ |  selection_add_targets(...)
+ |  
+ |  selection_clear_targets(...)
+ |  
+ |  selection_convert(...)
+ |  
+ |  selection_owner_set(...)
+ |  
+ |  selection_remove_all(...)
+ |  
+ |  send_expose(...)
+ |  
+ |  send_focus_change(...)
+ |  
+ |  set_accel_path(...)
+ |  
+ |  set_activate_signal(...)
+ |  
+ |  set_allocation(...)
+ |  
+ |  set_app_paintable(...)
+ |  
+ |  set_can_default(...)
+ |  
+ |  set_can_focus(...)
+ |  
+ |  set_child_visible(...)
+ |  
+ |  set_colormap(...)
+ |  
+ |  set_composite_name(...)
+ |  
+ |  set_direction(...)
+ |  
+ |  set_double_buffered(...)
+ |  
+ |  set_events(...)
+ |  
+ |  set_extension_events(...)
+ |  
+ |  set_has_tooltip(...)
+ |  
+ |  set_has_window(...)
+ |  
+ |  set_mapped(...)
+ |  
+ |  set_name(...)
+ |  
+ |  set_no_show_all(...)
+ |  
+ |  set_parent(...)
+ |  
+ |  set_parent_window(...)
+ |  
+ |  set_realized(...)
+ |  
+ |  set_receives_default(...)
+ |  
+ |  set_redraw_on_allocate(...)
+ |  
+ |  set_scroll_adjustments(...)
+ |  
+ |  set_sensitive(...)
+ |  
+ |  set_set_scroll_adjustments_signal(...)
+ |  
+ |  set_size_request(...)
+ |  
+ |  set_state(...)
+ |  
+ |  set_style(...)
+ |  
+ |  set_tooltip_markup(...)
+ |  
+ |  set_tooltip_text(...)
+ |  
+ |  set_tooltip_window(...)
+ |  
+ |  set_uposition(...)
+ |  
+ |  set_usize(...)
+ |  
+ |  set_visible(...)
+ |  
+ |  set_window(...)
+ |  
+ |  shape_combine_mask(...)
+ |  
+ |  show(...)
+ |  
+ |  show_all(...)
+ |  
+ |  show_now(...)
+ |  
+ |  size_allocate(...)
+ |  
+ |  size_request(...)
+ |  
+ |  style_attach(...)
+ |  
+ |  style_get_property(...)
+ |  
+ |  thaw_child_notify(...)
+ |  
+ |  translate_coordinates(...)
+ |  
+ |  trigger_tooltip_query(...)
+ |  
+ |  unmap(...)
+ |  
+ |  unparent(...)
+ |  
+ |  unrealize(...)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors inherited from gtk.Widget:
+ |  
+ |  allocation
+ |  
+ |  name
+ |  
+ |  parent
+ |  
+ |  requisition
+ |  
+ |  saved_state
+ |  
+ |  state
+ |  
+ |  style
+ |  
+ |  window
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from gtk.Object:
+ |  
+ |  do_destroy(...)
+ |  
+ |  flags(...)
+ |  
+ |  remove_data(...)
+ |  
+ |  remove_no_notify(...)
+ |  
+ |  set_flags(...)
+ |  
+ |  unset_flags(...)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from gobject._gobject.GObject:
+ |  
+ |  __copy__(...)
+ |  
+ |  __deepcopy__(...)
+ |  
+ |  __delattr__(...)
+ |      x.__delattr__('name') <==> del x.name
+ |  
+ |  __eq__(...)
+ |      x.__eq__(y) <==> x==y
+ |  
+ |  __gdoc__ = 'Object HAL_Gremlin\n\nSignals from HAL_Gremlin:\n  ...\xd0\xbd\xd1\x8b\xd0\xb5\n\nSignals from GObject:\n  notify (GParam)\n\n'
+ |  __ge__(...)
+ |      x.__ge__(y) <==> x>=y
+ |  
+ |  __gobject_init__(...)
+ |  
+ |  __gt__(...)
+ |      x.__gt__(y) <==> x>y
+ |  
+ |  __hash__(...)
+ |      x.__hash__() <==> hash(x)
+ |  
+ |  __le__(...)
+ |      x.__le__(y) <==> x<=y
+ |  
+ |  __lt__(...)
+ |      x.__lt__(y) <==> x<y
+ |  
+ |  __ne__(...)
+ |      x.__ne__(y) <==> x!=y
+ |  
+ |  __repr__(...)
+ |      x.__repr__() <==> repr(x)
+ |  
+ |  __setattr__(...)
+ |      x.__setattr__('name', value) <==> x.name = value
+ |  
+ |  chain(...)
+ |  
+ |  connect(...)
+ |  
+ |  connect_after(...)
+ |  
+ |  connect_object(...)
+ |  
+ |  connect_object_after(...)
+ |  
+ |  disconnect(...)
+ |  
+ |  disconnect_by_func(...)
+ |  
+ |  emit(...)
+ |  
+ |  emit_stop_by_name(...)
+ |  
+ |  freeze_notify(...)
+ |  
+ |  get_data(...)
+ |  
+ |  get_properties(...)
+ |  
+ |  get_property(...)
+ |  
+ |  handler_block(...)
+ |  
+ |  handler_block_by_func(...)
+ |  
+ |  handler_disconnect(...)
+ |  
+ |  handler_is_connected(...)
+ |  
+ |  handler_unblock(...)
+ |  
+ |  handler_unblock_by_func(...)
+ |  
+ |  notify(...)
+ |  
+ |  props = <gobject.GProps object>
+ |  set_data(...)
+ |  
+ |  set_properties(...)
+ |  
+ |  set_property(...)
+ |  
+ |  stop_emission(...)
+ |  
+ |  thaw_notify(...)
+ |  
+ |  weak_ref(...)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors inherited from gobject._gobject.GObject:
+ |  
+ |  __dict__
+ |  
+ |  __grefcount__
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes inherited from gobject._gobject.GObject:
+ |  
+ |  __new__ = <built-in method __new__ of GObjectMeta object>
+ |      T.__new__(S, ...) -> a new object with type S, a subtype of T
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from atk.ImplementorIface:
+ |  
+ |  ref_accessible(...)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from gtk.Buildable:
+ |  
+ |  add_child(...)
+ |  
+ |  construct_child(...)
+ |  
+ |  do_add_child(...)
+ |  
+ |  do_construct_child(...)
+ |  
+ |  do_get_internal_child(...)
+ |  
+ |  do_parser_finished(...)
+ |  
+ |  do_set_name(...)
+ |  
+ |  get_internal_child(...)
+ |  
+ |  parser_finished(...)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from gtk.gtkgl.widget.Widget:
+ |  
+ |  create_gl_context(self, share_list=None, direct=True, render_type=<enum GDK_GL_RGBA_TYPE of type GdkGLRenderType>)
+ |  
+ |  get_gl_config(self)
+ |  
+ |  get_gl_context(self)
+ |  
+ |  get_gl_drawable(self)
+ |  
+ |  get_gl_window(self)
+ |  
+ |  is_gl_capable(self)
+ |  
+ |  set_gl_capability(self, glconfig, share_list=None, direct=True, render_type=<enum GDK_GL_RGBA_TYPE of type GdkGLRenderType>)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors inherited from gtk.gtkgl.widget.Widget:
+ |  
+ |  __weakref__
+ |      list of weak references to the object (if defined)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from glnav.GlNavBase:
+ |  
+ |  basic_lighting(self)
+ |      Set up some basic lighting (single infinite light source).
+ |      
+ |      Also switch on the depth buffer.
+ |  
+ |  continueZoom(self, y)
+ |  
+ |  getRotateMode(self)
+ |  
+ |  get_zoom_distance(self)
+ |  
+ |  recordMouse(self, x, y)
+ |  
+ |  reset(self)
+ |      Reset rotation matrix for this widget.
+ |  
+ |  rotate(self, x, y)
+ |      Perform rotation of scene.
+ |  
+ |  rotateOrTranslate(self, x, y)
+ |  
+ |  scale(self, x, y)
+ |      Scale the scene.  Achieved by moving the eye position.
+ |      
+ |      Dragging up zooms in, while dragging down zooms out
+ |  
+ |  set_background(self, r, g, b)
+ |      Change the background colour of the widget.
+ |  
+ |  set_centerpoint(self, x, y, z)
+ |      Set the new center point for the model.
+ |      This is where we are looking.
+ |  
+ |  set_eyepoint(self, distance)
+ |      Set how far the eye is from the position we are looking.
+ |  
+ |  set_eyepoint_from_extents(self, e1, e2)
+ |      Set how far the eye is from the position we are looking
+ |      based on the screen width and height of a subject.
+ |  
+ |  set_latitudelimits(self, minlat, maxlat)
+ |      Set the new "latitude" limits for rotations.
+ |  
+ |  set_view_p(self)
+ |  
+ |  set_view_x(self)
+ |  
+ |  set_view_y(self)
+ |  
+ |  set_view_y2(self)
+ |  
+ |  set_view_z(self)
+ |  
+ |  set_view_z2(self)
+ |  
+ |  set_viewangle(self, lat, lon)
+ |  
+ |  set_zoom_distance(self, data)
+ |  
+ |  startRotate(self, x, y)
+ |  
+ |  startZoom(self, y)
+ |  
+ |  translate(self, x, y)
+ |      Perform translation of scene.
+ |  
+ |  translateOrRotate(self, x, y)
+ |  
+ |  zoomin(self)
+ |  
+ |  zoomout(self)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from rs274.glcanon.GlCanonDraw:
+ |  
+ |  __del__(self)
+ |  
+ |  cache_tool(self, current_tool)
+ |  
+ |  color_limit(self, cond)
+ |  
+ |  comp(self, (sx, sy), (cx, cy))
+ |  
+ |  dlist(self, name, n=1, gen=<function <lambda>>)
+ |  
+ |  draw_axes(self, n, letters='XYZ')
+ |  
+ |  draw_grid(self)
+ |  
+ |  draw_grid_lines(self, space, (ox, oy), (lim_pts, (d0, d1)), lim_min, lim_max, inverse_permutation)
+ |  
+ |  draw_grid_permuted(self, rotation, permutation, inverse_permutation)
+ |  
+ |  draw_small_origin(self, n)
+ |  
+ |  extents_info(self)
+ |  
+ |  from_internal_units(self, pos, unit=None)
+ |  
+ |  get_foam_w(self)
+ |  
+ |  get_foam_z(self)
+ |  
+ |  get_grid(self)
+ |  
+ |  lathetool(self, current_tool)
+ |  
+ |  load_preview(self, f, canon, unitcode, initcode, interpname='')
+ |  
+ |  make_cone(self, n)
+ |  
+ |  make_main_list(self, unused=None)
+ |  
+ |  make_selection_list(self, unused=None)
+ |  
+ |  param(self, (x1, y1), (dx1, dy1), (x3, y3), (dx3, dy3))
+ |  
+ |  posstrs(self)
+ |  
+ |  redraw(self)
+ |  
+ |  redraw_ortho = inner(self, *args, **kw)
+ |  
+ |  redraw_perspective = inner(self, *args, **kw)
+ |  
+ |  select(self, x, y)
+ |  
+ |  set_canon(self, canon)
+ |  
+ |  set_current_line(self, line)
+ |  
+ |  set_highlight_line(self, line)
+ |  
+ |  show_extents(self)
+ |  
+ |  soft_limits(self)
+ |  
+ |  stale_dlist(self, name)
+ |  
+ |  to_internal_linear_unit(self, v, unit=None)
+ |  
+ |  to_internal_units(self, pos, unit=None)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes inherited from rs274.glcanon.GlCanonDraw:
+ |  
+ |  colors = {'arc_feed': (1.0, 1.0, 1.0), 'arc_feed_alpha': 0.5, 'arc_fee...
+ |  
+ |  lathe_shapes = [None, (1, -1), (1, 1), (-1, 1), (-1, -1), (0, -1), (1,...
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from gladevcp.hal_actions._EMC_ActionBase:
+ |  
+ |  is_all_homed(self)
+ |  
+ |  is_auto_mode(self)
+ |  
+ |  is_file_loaded(self)
+ |  
+ |  machine_on(self)
+ |  
+ |  no_home_required(self)
+ |  
+ |  safe_handler(self, f)
+ |  
+ |  set_active_safe(self, active)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes inherited from gladevcp.hal_actions._EMC_ActionBase:
+ |  
+ |  linuxcnc_static = <gladevcp.hal_actions._EMCStatic instance>
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from gladevcp.hal_widgets._HalWidgetBase:
+ |  
+ |  hal_init(self, comp, name)
+ |  
+ |  hal_update(self)
+ |      Update HAL state
+
