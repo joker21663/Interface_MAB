@@ -1,0 +1,129 @@
+_FILES_CLASSICLADDER
+_FILE-modbusioconf.csv
+#VER=2.0
+_/FILE-modbusioconf.csv
+_FILE-general.txt
+PERIODIC_REFRESH=50
+PERIODIC_INPUTS_REFRESH=10
+SIZE_NBR_RUNGS=100
+SIZE_NBR_BITS=500
+SIZE_NBR_WORDS=100
+SIZE_NBR_TIMERS=10
+SIZE_NBR_MONOSTABLES=10
+SIZE_NBR_COUNTERS=10
+SIZE_NBR_TIMERS_IEC=10
+SIZE_NBR_PHYS_INPUTS=50
+SIZE_NBR_PHYS_OUTPUTS=50
+SIZE_NBR_ARITHM_EXPR=100
+SIZE_NBR_SECTIONS=10
+SIZE_NBR_SYMBOLS=100
+SIZE_NBR_PHYS_WORDS_INPUTS=25
+SIZE_NBR_PHYS_WORDS_OUTPUTS=25
+MODBUS_MASTER_SERIAL_PORT=
+MODBUS_MASTER_SERIAL_SPEED=9600
+MODBUS_MASTER_SERIAL_DATABITS=8
+MODBUS_MASTER_SERIAL_PARITY=0
+MODBUS_MASTER_SERIAL_STOPBITS=1
+_/FILE-general.txt
+_FILE-timers_iec.csv
+#VER=2.0
+TM0,1,9,0
+TM1,1,3,2
+TM2,1,3,1
+TM3,1,3,0
+TM4,1,3,2
+_/FILE-timers_iec.csv
+_FILE-counters.csv
+#VER=2.0
+_/FILE-counters.csv
+_FILE-rung_0.csv
+#VER=3.0
+#LABEL=
+#COMMENT=
+#PREVRUNG=0
+#NEXTRUNG=1
+#NBRLINES=8
+0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0
+1-0-50/0 , 99-0-0/0 , 13-0-0/2 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 50-0-60/0
+0-0-0/0 , 99-0-0/0 , 99-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0
+1-0-50/1 , 99-0-0/0 , 13-0-0/3 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 50-0-60/1
+0-0-0/0 , 99-0-0/0 , 99-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0
+1-0-50/2 , 99-0-0/0 , 13-0-0/4 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 50-0-60/2
+0-0-0/0 , 99-0-0/0 , 99-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0
+0-0-50/3 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0
+_/FILE-rung_0.csv
+_FILE-ioconf.csv
+#VER=1.0
+_/FILE-ioconf.csv
+_FILE-config_events.csv
+#VER=1.0
+_/FILE-config_events.csv
+_FILE-timers.csv
+#VER=2.0
+_/FILE-timers.csv
+_FILE-monostables.csv
+#VER=2.0
+_/FILE-monostables.csv
+_FILE-spy_vars.csv
+200,200,200,200,200,200,200,270,270,200
+0,1,2,3,4,5,6,0,1,1
+0,0,0
+0,0,0,0,3,0,3,0,0,0
+_/FILE-spy_vars.csv
+_FILE-project_infos.txt
+PROJECT_NAME=Example project
+PARAM_AUTHOR=Marc Le Douarain
+PARAM_VERSION=4
+CREA_DATE=12/02/20 20:34:38
+MODIF_DATE=12/07/05 19:58:10
+_/FILE-project_infos.txt
+_FILE-arithmetic_expressions.csv
+#VER=2.0
+0000,@200/0@=@261/0@
+0002,@260/0@=@260/0@+1
+0003,@260/0@>10
+0004,@260/0@=1
+0005,@261/0@>@260/0@/2
+_/FILE-arithmetic_expressions.csv
+_FILE-sections.csv
+#VER=1.0
+#NAME000=Prog1
+000,0,-1,0,1,0
+_/FILE-sections.csv
+_FILE-symbols.csv
+#VER=1.0
+_/FILE-symbols.csv
+_FILE-com_params.txt
+MODBUS_ELEMENT_OFFSET=1
+MODBUS_MASTER_SERIAL_USE_RTS_TO_SEND=0
+MODBUS_MASTER_TIME_INTER_FRAME=100
+MODBUS_MASTER_TIME_OUT_RECEIPT=500
+MODBUS_MASTER_TIME_AFTER_TRANSMIT=0
+MODBUS_DEBUG_LEVEL=3
+MODBUS_MAP_TYPE_FOR_READ_INPUTS=50
+MODBUS_MAP_TYPE_FOR_READ_COILS=60
+MODBUS_MAP_TYPE_FOR_WRITE_COILS=60
+MODBUS_MAP_TYPE_FOR_READ_INPUT_REGS=270
+MODBUS_MAP_TYPE_FOR_READ_HOLD_REGS=280
+MODBUS_MAP_TYPE_FOR_WRITE_HOLD_REGS=280
+_/FILE-com_params.txt
+_FILE-sequential.csv
+#VER=1.0
+_/FILE-sequential.csv
+_FILE-rung_1.csv
+#VER=3.0
+#LABEL=
+#COMMENT=
+#PREVRUNG=0
+#NEXTRUNG=-1
+#NBRLINES=8
+0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0
+0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0
+2-0-0/0 , 9-0-0/0 , 99-0-0/0 , 13-0-0/0 , 9-0-0/0 , 99-0-0/0 , 13-0-0/1 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 50-0-0/0
+0-0-0/0 , 0-0-0/0 , 99-0-0/0 , 99-0-0/0 , 0-0-0/0 , 99-0-0/0 , 99-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0 , 0-0-0/0
+9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 99-0-0/0 , 99-0-0/0 , 60-0-0/0
+99-0-0/0 , 99-0-0/0 , 20-0-0/5 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 50-0-60/3
+1-0-15/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 99-0-0/0 , 99-0-0/0 , 60-0-0/2
+99-0-0/0 , 99-0-0/0 , 20-0-0/3 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 9-0-0/0 , 99-0-0/0 , 99-0-0/0 , 60-0-0/4
+_/FILE-rung_1.csv
+_/FILES_CLASSICLADDER

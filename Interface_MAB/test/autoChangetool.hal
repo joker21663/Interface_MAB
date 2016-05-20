@@ -1,0 +1,16 @@
+#loadusr -W hal_manualtoolchange
+loadrt threads
+loadrt classicladder_rt
+loadusr classicladder test2.clp
+addf classicladder.0.refresh thread1
+# in case they were linked already
+#unlinkp iocontrol.0.tool-change
+#unlinkp iocontrol.0.tool-changed
+
+net tool-change classicladder.0.in-00 <= iocontrol.0.tool-change
+net tool-changed classicladder.0.out-00 => iocontrol.0.tool-changed 
+
+#net tool-change hal_manualtoolchange.change iocontrol.0.tool-change 
+#net tool-changed hal_manualtoolchange.changed iocontrol.0.tool-changed
+#net tool-prep-number hal_manualtoolchange.number iocontrol.0.tool-prep-number
+
