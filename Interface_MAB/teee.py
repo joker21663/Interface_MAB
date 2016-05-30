@@ -64,6 +64,7 @@ class HellowWorldGTK:
         self.builder.add_from_file(xmlname)
         self.builder.connect_signals(self)
         self.window = self.builder.get_object("MainWindow")
+        self.window.set_default_size(640,400)
 #  Установка HAL         
         self.halcomp = hal.component("work")
         self.halcomp.ready()
@@ -81,13 +82,14 @@ class HellowWorldGTK:
 #        self.builder.get_object("label20").modify_font(lABELFont)
         self.builder.get_object("ProgName1").modify_font(lABELFont)
         self.builder.get_object("label27").modify_font(lABELFont)
-        self.builder.get_object("label40").modify_font(lABELFont)
-        self.builder.get_object("label24").modify_font(lABELFont)
-        self.builder.get_object("label25").modify_font(lABELFont)
-        self.builder.get_object("label26").modify_font(lABELFont)
-        lABELFont = pango.FontDescription("Tahoma 15")
-        self.builder.get_object("label28").modify_font(lABELFont)
-        self.builder.get_object("label29").modify_font(lABELFont)
+
+#        self.builder.get_object("label40").modify_font(lABELFont)
+#        self.builder.get_object("label24").modify_font(lABELFont)
+#        self.builder.get_object("label25").modify_font(lABELFont)
+#        self.builder.get_object("label26").modify_font(lABELFont)
+#        lABELFont = pango.FontDescription("Tahoma 15")
+#        self.builder.get_object("label28").modify_font(lABELFont)
+#        self.builder.get_object("label29").modify_font(lABELFont)
 
         self.Set_Big_Fat(self.builder.get_object("label20"))
         self.Set_Big_Fat(self.builder.get_object("label30"))
@@ -97,20 +99,20 @@ class HellowWorldGTK:
         self.Set_Big_Fat(self.builder.get_object("label35"))
         self.Set_Big_Fat(self.builder.get_object("label36"))
         self.Set_Big_Fat(self.builder.get_object("label37"))
-        self.Set_Big_Fat(self.builder.get_object("label4"))
-        self.Set_Big_Fat(self.builder.get_object("label5"))
-        self.Set_Big_Fat(self.builder.get_object("label6"))
-        self.Set_Big_Fat(self.builder.get_object("label7"))
-        self.Set_Big_Fat(self.builder.get_object("label8"))
-        self.Set_Big_Fat(self.builder.get_object("label9"))
+#        self.Set_Big_Fat(self.builder.get_object("label4"))
+#        self.Set_Big_Fat(self.builder.get_object("label5"))
+#        self.Set_Big_Fat(self.builder.get_object("label6"))
+#        self.Set_Big_Fat(self.builder.get_object("label7"))
+#        self.Set_Big_Fat(self.builder.get_object("label8"))
+#        self.Set_Big_Fat(self.builder.get_object("label9"))
         
-        font = pango.FontDescription('Tahoma 40')
-        self.builder.get_object("entry2").set_text('0')
-        self.builder.get_object("entry2").modify_font(font)
-        self.builder.get_object("entry3").set_text('0')
-        self.builder.get_object("entry3").modify_font(font)
-        self.builder.get_object("entry4").set_text('0')
-        self.builder.get_object("entry4").modify_font(font)
+#        font = pango.FontDescription('Tahoma 40')
+#        self.builder.get_object("entry2").set_text('0')
+#        self.builder.get_object("entry2").modify_font(font)
+#        self.builder.get_object("entry3").set_text('0')
+#        self.builder.get_object("entry3").modify_font(font)
+#        self.builder.get_object("entry4").set_text('0')
+#        self.builder.get_object("entry4").modify_font(font)
 
 
 #        self.builder.get_object("textview1").modify_font(font)
@@ -246,6 +248,28 @@ class HellowWorldGTK:
 
         return  gcodestext       
 
+
+    def move_cursor(self,treeview, step, count):
+        path, column1 = treeview.get_cursor()        
+        treeview.set_cursor(path, column1, start_editing = True)
+        # self.treeview.grab_focus() # Если не убрать, то не работает
+        return True # Чтобы не обрабатывался дальше Tab
+
+
+#        path, column = treeview.get_cursor()
+#        treeview.set_cursor(path, column, start_editing = True)
+#        print path
+#        print column
+#        print step
+#        print count
+#        area = treeview.row_activated(path,column) 
+#        print area
+#        if (column != None): 
+#            treeview.set_cursor(path, column, start_editing = True)
+#        treeview.set_cursor_on_cell(path, column, ,True)
+
+
+
     def periodic(self): # обновляем значения интерфейса
 # обновляем параметры на форме
         self.status.poll()
@@ -260,17 +284,17 @@ class HellowWorldGTK:
         self.builder.get_object("ProgName1").set_label(tgg[1])
         pos=self.status.actual_position
         posOff = self.status.g5x_offset
-        self.builder.get_object("label35").set_text('%.3f'%(posOff[0]))
-        self.builder.get_object("label36").set_text('%.3f'%(posOff[1]))
-        self.builder.get_object("label37").set_text('%.3f'%(posOff[2]))
+        self.builder.get_object("label35").set_text('%.3f'%(posOff[0]+pos[0]))
+        self.builder.get_object("label36").set_text('%.3f'%(posOff[1]+pos[1]))
+        self.builder.get_object("label37").set_text('%.3f'%(posOff[2]+pos[2]))
         
-        self.builder.get_object("label17").set_text('%.3f'%(pos[0]))
-        self.builder.get_object("label18").set_text('%.3f'%(pos[1]))
-        self.builder.get_object("label39").set_text('%.3f'%(pos[2]))
+#        self.builder.get_object("label17").set_text('%.3f'%(pos[0]))
+#        self.builder.get_object("label18").set_text('%.3f'%(pos[1]))
+#        self.builder.get_object("label39").set_text('%.3f'%(pos[2]))
 
-        self.Set_Big_Fat(self.builder.get_object("label17"))
-        self.Set_Big_Fat(self.builder.get_object("label18"))
-        self.Set_Big_Fat(self.builder.get_object("label39"))
+   #     self.Set_Big_Fat(self.builder.get_object("label17"))
+   #     self.Set_Big_Fat(self.builder.get_object("label18"))
+   #     self.Set_Big_Fat(self.builder.get_object("label39"))
 
         self.Set_Big_Fat(self.builder.get_object("label35"))
         self.Set_Big_Fat(self.builder.get_object("label36"))
@@ -567,6 +591,10 @@ class HellowWorldGTK:
         
         elif (NameButton.translate(None, string.whitespace).find('F1MDIРучнойнабор')==0):
             self.MDIWindows = self.builder.get_object("MDI")
+            self.MDIWindows.set_default_size(300,300)
+            self.builder.get_object("vbox23").modify_bg(gtk.STATE_NORMAL,gtk.gdk.color_parse("#000000"))
+
+
             self.Set_Font_Text_Button('button1','F1 \nВыполнить\n')
             self.Set_Font_Text_Button('button2','F2 \nОтмена\n')
             self.Set_Font_Text_Button('button3','F3 \nУдалить символ\n')            
