@@ -82,7 +82,10 @@ class HellowWorldGTK:
 #        self.builder.get_object("label20").modify_font(lABELFont)
         self.builder.get_object("ProgName1").modify_font(lABELFont)
         self.builder.get_object("label27").modify_font(lABELFont)
-
+        self.builder.get_object("cellrenderertext4").set_property("font", "Tahoma 20");
+        self.builder.get_object("cellrenderertext5").set_property("font", "Tahoma 20");
+        self.builder.get_object("cellrenderertext6").set_property("font", "Tahoma 20");
+        self.builder.get_object("cellrenderertext7").set_property("font", "Tahoma 20");
 #        self.builder.get_object("label40").modify_font(lABELFont)
 #        self.builder.get_object("label24").modify_font(lABELFont)
 #        self.builder.get_object("label25").modify_font(lABELFont)
