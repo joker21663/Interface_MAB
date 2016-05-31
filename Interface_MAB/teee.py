@@ -82,10 +82,31 @@ class HellowWorldGTK:
 #        self.builder.get_object("label20").modify_font(lABELFont)
         self.builder.get_object("ProgName1").modify_font(lABELFont)
         self.builder.get_object("label27").modify_font(lABELFont)
-        self.builder.get_object("cellrenderertext4").set_property("font", "Tahoma 20");
-        self.builder.get_object("cellrenderertext5").set_property("font", "Tahoma 20");
-        self.builder.get_object("cellrenderertext6").set_property("font", "Tahoma 20");
-        self.builder.get_object("cellrenderertext7").set_property("font", "Tahoma 20");
+        
+        dictCol = {4:"OFFSET", 5: "X" ,6:"Y",7:"Z"}
+        i=4
+        while i<8:
+            labelfff = gtk.Label(dictCol[i]);
+            labelfff.modify_font(lABELFont);
+            labelfff.show();
+            self.builder.get_object("treeviewcolumn"+str(i)).set_widget(labelfff);
+            i= i+1
+        i=4
+        while i<8:
+            self.builder.get_object("cellrenderertext"+str(i)).set_property("font", "Tahoma 20")
+            self.builder.get_object("cellrenderertext"+str(i)).set_property("xalign", 0.5)
+            self.builder.get_object("cellrenderertext"+str(i)).set_alignment(0.5, 0.5)
+#            self.builder.get_object("cellrenderertext"+str(4)).set_property("markup", True)
+#            self.builder.get_object("cellrenderertext"+str(4)).set_markup('<span  dir="rtl" font="20" font_weight="heavy" />')
+            i= i+1
+       
+
+        self.builder.get_object("cellrenderertext4").set_property('xalign', 0.5);
+        self.builder.get_object("cellrenderertext5").set_property('xalign', 0.5);
+        self.builder.get_object("cellrenderertext6").set_property('xalign', 0.5);
+        self.builder.get_object("cellrenderertext7").set_property('xalign', 0.5);
+
+
 #        self.builder.get_object("label40").modify_font(lABELFont)
 #        self.builder.get_object("label24").modify_font(lABELFont)
 #        self.builder.get_object("label25").modify_font(lABELFont)
@@ -158,7 +179,9 @@ class HellowWorldGTK:
         self.gren_style_button=style
         i=1
         while i<10:
+           self.builder.get_object('f'+str(i)).set_size_request(60,60)
            self.builder.get_object('f'+str(i)).set_style(self.default_style_button)
+
            i=i+1 
         self.window.show()
         self.builder.get_object('hidenButton').show()
@@ -637,95 +660,95 @@ class HellowWorldGTK:
             print 'g' 
 
         elif (NameButton.translate(None, string.whitespace).find('F4Допклавиши')==0): 
-            self.Set_Font_Text_Button('f1','F1 \nВыбор файла\nпрограммы')
-            self.Set_Font_Text_Button('f2','F2 \nПоиск')
-            self.Set_Font_Text_Button('f3','F3 \nВставить\n (')
-            self.Set_Font_Text_Button('f4','F4 \nВставить\n )')
-            self.Set_Font_Text_Button('f5','F5 \nВставить\n .')
-            self.Set_Font_Text_Button('f6','F6 \nВставить\n ,')
-            self.Set_Font_Text_Button('f7','F7 \nВставить\n +')
-            self.Set_Font_Text_Button('f8','F8 \nНазад\nв редактор')
+            self.Set_Font_Text_Button('f1','F1\nВыбор файла\nпрограммы')
+            self.Set_Font_Text_Button('f2','F2\nПоиск')
+            self.Set_Font_Text_Button('f3','F3\nВставить\n (')
+            self.Set_Font_Text_Button('f4','F4\nВставить\n )')
+            self.Set_Font_Text_Button('f5','F5\nВставить\n .')
+            self.Set_Font_Text_Button('f6','F6\nВставить\n ,')
+            self.Set_Font_Text_Button('f7','F7\nВставить\n +')
+            self.Set_Font_Text_Button('f8','F8\nНазад\nв редактор')
             self.Set_Font_Text_Button('f9','\nГлавное\nменю')
             self.builder.get_object("notebook1").set_current_page(5)
             self.builder.get_object("textview3").grab_focus();
         elif (NameButton.translate(None, string.whitespace).find('F3ФункцииРедактора')==0): 
-            self.Set_Font_Text_Button('f1','F1 \nВыбор файла\nпрограммы')
-            self.Set_Font_Text_Button('f2','F2 \nПоиск')
-            self.Set_Font_Text_Button('f3','F3 \nНачать\nвыделение')
-            self.Set_Font_Text_Button('f4','F4 \nЗакончить\nвыделение')
-            self.Set_Font_Text_Button('f5','F5 \nСкопировать\n')
-            self.Set_Font_Text_Button('f6','F6 \nВырезать\n ')
-            self.Set_Font_Text_Button('f7','F7 \nВставить\n')
-            self.Set_Font_Text_Button('f8','F8 \nНазад\nв редактор')
+            self.Set_Font_Text_Button('f1','F1\nВыбор файла\nпрограммы')
+            self.Set_Font_Text_Button('f2','F2\nПоиск')
+            self.Set_Font_Text_Button('f3','F3\nНачать\nвыделение')
+            self.Set_Font_Text_Button('f4','F4\nЗакончить\nвыделение')
+            self.Set_Font_Text_Button('f5','F5\nСкопировать\n')
+            self.Set_Font_Text_Button('f6','F6\nВырезать\n ')
+            self.Set_Font_Text_Button('f7','F7\nВставить\n')
+            self.Set_Font_Text_Button('f8','F8\nНазад\nв редактор')
             self.Set_Font_Text_Button('f9','\nГлавное\nменю')
             self.builder.get_object("notebook1").set_current_page(5)
             self.builder.get_object("textview3").grab_focus(); 
         elif (NameButton.translate(None, string.whitespace).find('F5Редакторпрограмм')==0 or NameButton.translate(None, string.whitespace).find('F8Назадвредактор')==0):
-            self.Set_Font_Text_Button('f1','F1 \nВыбор файла\nпрограммы')
-            self.Set_Font_Text_Button('f2','F2 \nПоиск')
-            self.Set_Font_Text_Button('f3','F3 \nФункции\nРедактора')
-            self.Set_Font_Text_Button('f4','F4 \nДоп\nклавиши')
-            self.Set_Font_Text_Button('f5','F5 \nСохранить\nпрограмму')
-            self.Set_Font_Text_Button('f6','F6 \n\n ')
-            self.Set_Font_Text_Button('f7','F7 \n\n')
-            self.Set_Font_Text_Button('f8','F8 \nГрафика\n')
+            self.Set_Font_Text_Button('f1','F1\nВыбор файла\nпрограммы')
+            self.Set_Font_Text_Button('f2','F2\nПоиск')
+            self.Set_Font_Text_Button('f3','F3\nФункции\nРедактора')
+            self.Set_Font_Text_Button('f4','F4\nДоп\nклавиши')
+            self.Set_Font_Text_Button('f5','F5\nСохранить\nпрограмму')
+            self.Set_Font_Text_Button('f6','F6\n\n ')
+            self.Set_Font_Text_Button('f7','F7\n\n')
+            self.Set_Font_Text_Button('f8','F8\nГрафика\n')
             self.Set_Font_Text_Button('f9','\nГлавное\nменю')
             self.builder.get_object("notebook1").set_current_page(5)
             self.builder.get_object("textview3").grab_focus(); 
         elif (NameButton.translate(None, string.whitespace).find('F7Сервис')==0):
-            self.Set_Font_Text_Button('f1','F1 \n\n')
-            self.Set_Font_Text_Button('f2','F2 \n\n')
-            self.Set_Font_Text_Button('f3','F3 \n\n')
-            self.Set_Font_Text_Button('f4','F4 \n\n')
-            self.Set_Font_Text_Button('f5','F5 \n\n')
-            self.Set_Font_Text_Button('f6','F6 \n\n')
-            self.Set_Font_Text_Button('f7','F7 \n Test\n')
-            self.Set_Font_Text_Button('f8','F8 \nВыход\n')
+            self.Set_Font_Text_Button('f1','F1\n\n')
+            self.Set_Font_Text_Button('f2','F2\n\n')
+            self.Set_Font_Text_Button('f3','F3\n\n')
+            self.Set_Font_Text_Button('f4','F4\n\n')
+            self.Set_Font_Text_Button('f5','F5\n\n')
+            self.Set_Font_Text_Button('f6','F6\n\n')
+            self.Set_Font_Text_Button('f7','F7\n Test\n')
+            self.Set_Font_Text_Button('f8','F8\nВыход\n')
             self.Set_Font_Text_Button('f9','\nГлавное\nменю')
             self.builder.get_object("notebook1").set_current_page(7)    
         elif (NameButton.translate(None, string.whitespace).find('F6Графика')==0 or NameButton.translate(None, string.whitespace).find('F8Графика')==0):
-            self.Set_Font_Text_Button('f1','F1 \nСменить\nВид')
-            self.Set_Font_Text_Button('f2','F2 \nВключить\nВыключить DRO')
-            self.Set_Font_Text_Button('f3','F3 \nПриблизить\n ')
-            self.Set_Font_Text_Button('f4','F4 \nУдалить\n ')
-            self.Set_Font_Text_Button('f5','F5 \nВправо\n ')
-            self.Set_Font_Text_Button('f6','F6 \nЛево\n ')
-            self.Set_Font_Text_Button('f7','F7 \nВверх\n ')
-            self.Set_Font_Text_Button('f8','F8 \nВниз\n')
+            self.Set_Font_Text_Button('f1','F1\nСменить\nВид')
+            self.Set_Font_Text_Button('f2','F2\nВключить\nВыключить DRO')
+            self.Set_Font_Text_Button('f3','F3\nПриблизить\n ')
+            self.Set_Font_Text_Button('f4','F4\nУдалить\n ')
+            self.Set_Font_Text_Button('f5','F5\nВправо\n ')
+            self.Set_Font_Text_Button('f6','F6\nЛево\n ')
+            self.Set_Font_Text_Button('f7','F7\nВверх\n ')
+            self.Set_Font_Text_Button('f8','F8\nВниз\n')
             self.Set_Font_Text_Button('f9','\nГлавное\nменю')
             self.builder.get_object("notebook1").set_current_page(6)   
         elif (NameButton.translate(None, string.whitespace).find('F1РучноеУправление')==0):
-            self.Set_Font_Text_Button('f1','F1 \nMDI\nРучной набор')
-            self.Set_Font_Text_Button('f2','F2 \nМаховичок\n')
-            self.Set_Font_Text_Button('f3','F3 \n0.001\n ')
-            self.Set_Font_Text_Button('f4','F4 \n0.01\n ')
-            self.Set_Font_Text_Button('f5','F5 \n0.1\n')
-            self.Set_Font_Text_Button('f6','F6 \nВращение\nшпинделя\nвправо')
-            self.Set_Font_Text_Button('f7','F7 \nСтоп\nшпиндель')
-            self.Set_Font_Text_Button('f8','F8 \nВращение\nшпинделя\nвлево')
+            self.Set_Font_Text_Button('f1','F1\nMDI\nРучной набор')
+            self.Set_Font_Text_Button('f2','F2\nМаховичок\n')
+            self.Set_Font_Text_Button('f3','F3\n0.001\n ')
+            self.Set_Font_Text_Button('f4','F4\n0.01\n ')
+            self.Set_Font_Text_Button('f5','F5\n0.1\n')
+            self.Set_Font_Text_Button('f6','F6\nВращение\nшпинделя\nвправо')
+            self.Set_Font_Text_Button('f7','F7\nСтоп\nшпиндель')
+            self.Set_Font_Text_Button('f8','F8\nВращение\nшпинделя\nвлево')
             self.Set_Font_Text_Button('f9','\nГлавное\nменю')
             self.builder.get_object("notebook1").set_current_page(0)        
         elif (NameButton.translate(None, string.whitespace).find('F4Коррекцияинструмента')==0):
-            self.Set_Font_Text_Button('f1','F1 \n\n')
-            self.Set_Font_Text_Button('f2','F2 \n\n')
-            self.Set_Font_Text_Button('f3','F3 \n\n ')
-            self.Set_Font_Text_Button('f4','F4 \n\n ')
-            self.Set_Font_Text_Button('f5','F5 \n\n')
-            self.Set_Font_Text_Button('f6','F6 \n\n')
-            self.Set_Font_Text_Button('f7','F7 \n\n')
-            self.Set_Font_Text_Button('f8','F8 \n\n')
-            self.Set_Font_Text_Button('f9','\n\n')
+            self.Set_Font_Text_Button('f1','F1\n\n')
+            self.Set_Font_Text_Button('f2','F2\n\n')
+            self.Set_Font_Text_Button('f3','F3\n\n ')
+            self.Set_Font_Text_Button('f4','F4\n\n ')
+            self.Set_Font_Text_Button('f5','F5\n\n')
+            self.Set_Font_Text_Button('f6','F6\n\n')
+            self.Set_Font_Text_Button('f7','F7\n\n')
+            self.Set_Font_Text_Button('f8','F8\n\n')
+            self.Set_Font_Text_Button('f9','\nГлавное\nменю')
             self.builder.get_object("notebook1").set_current_page(4)   
         elif (NameButton.translate(None, string.whitespace).find('F3НольДетали')==0):
-            self.Set_Font_Text_Button('f1','F1 \nG54\n')
-            self.Set_Font_Text_Button('f2','F2 \nG55\n')
-            self.Set_Font_Text_Button('f3','F3 \nG56\n ')
-            self.Set_Font_Text_Button('f4','F4 \nG57\n ')
-            self.Set_Font_Text_Button('f5','F5 \nG58\n')
-            self.Set_Font_Text_Button('f6','F6 \nG59\n')
-            self.Set_Font_Text_Button('f7','F7 \nРедактор\nТаблицы')
-            self.Set_Font_Text_Button('f8','F8 \n\n')
-            self.Set_Font_Text_Button('f9','\n\n')
+            self.Set_Font_Text_Button('f1','F1\nG54\n')
+            self.Set_Font_Text_Button('f2','F2\nG55\n')
+            self.Set_Font_Text_Button('f3','F3\nG56\n ')
+            self.Set_Font_Text_Button('f4','F4\nG57\n ')
+            self.Set_Font_Text_Button('f5','F5\nG58\n')
+            self.Set_Font_Text_Button('f6','F6\nG59\n')
+            self.Set_Font_Text_Button('f7','F7\nРедактор\nТаблицы')
+            self.Set_Font_Text_Button('f8','F8\n\n')
+            self.Set_Font_Text_Button('f9','\nГлавное\nменю')
             self.builder.get_object("notebook1").set_current_page(3)
             self.builder.get_object("f1").set_style(self.gren_style_button)  
             self.curr_coordinate='G54'
@@ -733,14 +756,14 @@ class HellowWorldGTK:
             self.jog_distance=0
             self.set_color_button()
             self.set_color_button_G_5x(widget)
-            self.Set_Font_Text_Button('f1','F1 \nРучное \nУправление')
-            self.Set_Font_Text_Button('f2','F2 \nAUTO\n')
-            self.Set_Font_Text_Button('f3','F3 \nНоль Детали\n')
-            self.Set_Font_Text_Button('f4','F4 \nКоррекция\nинструмента')
-            self.Set_Font_Text_Button('f5','F5 \nРедактор\nпрограмм')
-            self.Set_Font_Text_Button('f6','F6 \nГрафика\n')
-            self.Set_Font_Text_Button('f7','F7 \nСервис\n')
-            self.Set_Font_Text_Button('f8','F8 \nСистема\n')
+            self.Set_Font_Text_Button('f1','F1\nРучное\nУправление')
+            self.Set_Font_Text_Button('f2','F2\nAUTO\n')
+            self.Set_Font_Text_Button('f3','F3\nНоль\nДетали')
+            self.Set_Font_Text_Button('f4','F4\nКоррекция\nинструмента')
+            self.Set_Font_Text_Button('f5','F5\nРедактор\nпрограмм')
+            self.Set_Font_Text_Button('f6','F6\nГрафика\n')
+            self.Set_Font_Text_Button('f7','F7\nСервис\n')
+            self.Set_Font_Text_Button('f8','F8\nСистема\n')
             self.Set_Font_Text_Button('f9','\nГлавное\nменю')
             self.builder.get_object("notebook1").set_current_page(0)
     def on_MainWindow_delete_event(self, widget, event):

@@ -999,9 +999,12 @@
                 <child>
                   <object class="GtkTreeViewColumn" id="treeviewcolumn4">
                     <property name="title" translatable="yes">OFFSET</property>
+                    <property name="expand">True</property>
                     <property name="alignment">0.5</property>
                     <child>
-                      <object class="GtkCellRendererText" id="cellrenderertext4"/>
+                      <object class="GtkCellRendererText" id="cellrenderertext4">
+                        <property name="alignment">center</property>
+                      </object>
                       <attributes>
                         <attribute name="text">0</attribute>
                       </attributes>
@@ -1012,8 +1015,10 @@
                   <object class="GtkTreeViewColumn" id="treeviewcolumn5">
                     <property name="title" translatable="yes">X</property>
                     <property name="expand">True</property>
+                    <property name="alignment">0.5</property>
                     <child>
                       <object class="GtkCellRendererText" id="cellrenderertext5">
+                        <property name="alignment">center</property>
                         <property name="editable">True</property>
                       </object>
                       <attributes>
@@ -1027,6 +1032,7 @@
                     <property name="sizing">autosize</property>
                     <property name="title" translatable="yes">Y</property>
                     <property name="expand">True</property>
+                    <property name="alignment">0.5</property>
                     <child>
                       <object class="GtkCellRendererText" id="cellrenderertext6">
                         <property name="alignment">center</property>
@@ -1042,6 +1048,7 @@
                   <object class="GtkTreeViewColumn" id="treeviewcolumn7">
                     <property name="title" translatable="yes">Z</property>
                     <property name="expand">True</property>
+                    <property name="alignment">0.5</property>
                     <child>
                       <object class="GtkCellRendererText" id="cellrenderertext7">
                         <property name="alignment">center</property>
