@@ -83,28 +83,68 @@ class HellowWorldGTK:
         self.builder.get_object("ProgName1").modify_font(lABELFont)
         self.builder.get_object("label27").modify_font(lABELFont)
         
+            
+#            self.builder.get_object("cellrenderertext"+str(i)).set_alignment(0.5, 0.5)
+#            self.builder.get_object("cellrenderertext"+str(4)).set_property("markup", True)
+#            self.builder.get_object("cellrenderertext"+str(4)).set_markup('<span  dir="rtl" font="20" font_weight="heavy" />')
+
+        self.tree_store = gtk.ListStore(gobject.TYPE_STRING,gobject.TYPE_FLOAT,gobject.TYPE_FLOAT,gobject.TYPE_FLOAT)
+        self.treeview3 = gtk.TreeView(self.tree_store)
+        cell = gtk.CellRendererText()
+        cell.set_property('xalign', 0.5);
+        cell.set_property("font", "Tahoma 20")
+        cell2 = gtk.CellRendererText()
+        cell2.set_property('xalign', 0.5);
+        cell2.set_property("font", "Tahoma 20")
+        cell2.set_property("editable", True)
+        cell3 = gtk.CellRendererText()
+        cell3.set_property('xalign', 0.5);
+        cell3.set_property("font", "Tahoma 20")
+        cell3.set_property("editable", True)
+        cell4 = gtk.CellRendererText()
+        cell4.set_property('xalign', 0.5);
+        cell4.set_property("font", "Tahoma 20")
+        cell4.set_property("editable", True)
+        treeviewcolumn = gtk.TreeViewColumn('OFFSET', cell,text=0)
+        treeviewcolumn2 = gtk.TreeViewColumn('X',cell2,text=1)
+        treeviewcolumn3 = gtk.TreeViewColumn('Y',cell3,text=2)
+        treeviewcolumn4 = gtk.TreeViewColumn('Z',cell4,text=3)
+
         dictCol = {4:"OFFSET", 5: "X" ,6:"Y",7:"Z"}
+        dictCol2 = {4:treeviewcolumn, 5: treeviewcolumn2 ,6:treeviewcolumn3,7:treeviewcolumn4}
         i=4
         while i<8:
             labelfff = gtk.Label(dictCol[i]);
             labelfff.modify_font(lABELFont);
             labelfff.show();
-            self.builder.get_object("treeviewcolumn"+str(i)).set_widget(labelfff);
+            dictCol2[i].set_widget(labelfff);
+            dictCol2[i].set_property('alignment', 0.5)
+            dictCol2[i].set_property('expand', True)
+            self.treeview3.append_column(dictCol2[i])
             i= i+1
-        i=4
-        while i<8:
-            self.builder.get_object("cellrenderertext"+str(i)).set_property("font", "Tahoma 20")
-            self.builder.get_object("cellrenderertext"+str(i)).set_property("xalign", 0.5)
-            self.builder.get_object("cellrenderertext"+str(i)).set_alignment(0.5, 0.5)
-#            self.builder.get_object("cellrenderertext"+str(4)).set_property("markup", True)
-#            self.builder.get_object("cellrenderertext"+str(4)).set_markup('<span  dir="rtl" font="20" font_weight="heavy" />')
-            i= i+1
-       
 
-        self.builder.get_object("cellrenderertext4").set_property('xalign', 0.5);
-        self.builder.get_object("cellrenderertext5").set_property('xalign', 0.5);
-        self.builder.get_object("cellrenderertext6").set_property('xalign', 0.5);
-        self.builder.get_object("cellrenderertext7").set_property('xalign', 0.5);
+
+        treeviewcolumn2.set_cell_data_func(cell2, self.Thround)
+        treeviewcolumn3.set_cell_data_func(cell3, self.Thround)
+        treeviewcolumn4.set_cell_data_func(cell4, self.Thround)
+        cell2.connect("edited", self.editTable, self.tree_store,1)
+        cell3.connect("edited", self.editTable, self.tree_store,2)
+        cell4.connect("edited", self.editTable, self.tree_store,3)
+        self.treeview3.connect_after("move-cursor",self.move_cursor)
+
+
+        self.tree_store.append([str('G54'),float(0),float(0),float(0)])
+        self.tree_store.append([str('G55'),float(0),float(0),float(0)])
+        self.tree_store.append([str('G56'),float(0),float(0),float(0)])
+        self.tree_store.append([str('G57'),float(0),float(0),float(0)])
+        self.tree_store.append([str('G58'),float(0),float(0),float(0)])
+        self.tree_store.append([str('G59'),float(0),float(0),float(0)])        
+        self.builder.get_object("scrolledwindow3").add(self.treeview3)
+        self.builder.get_object("scrolledwindow3").show_all()
+#        self.builder.get_object("cellrenderertext4").set_property('xalign', 0.5);
+#        self.builder.get_object("cellrenderertext5").set_property('xalign', 0.5);
+#        self.builder.get_object("cellrenderertext6").set_property('xalign', 0.5);
+#        self.builder.get_object("cellrenderertext7").set_property('xalign', 0.5);
 
 
 #        self.builder.get_object("label40").modify_font(lABELFont)
@@ -203,6 +243,13 @@ class HellowWorldGTK:
         self.builder.get_object("cellrenderertext2").connect("edited", self.editToolTable, self.liststore,1)
         self.builder.get_object("cellrenderertext3").connect("edited", self.editToolTable, self.liststore,2)
 
+        self.builder.get_object("treeviewcolumn2").set_cell_data_func(self.builder.get_object("cellrenderertext2"), self.Thround)
+        self.builder.get_object("treeviewcolumn3").set_cell_data_func(self.builder.get_object("cellrenderertext3"), self.Thround)
+  
+# редактор точек G5x
+#        self.liststore2 = self.builder.get_object('liststore2')
+#        self.treeview2=self.builder.get_object('treeview2')
+
         with open(self.tool_file,'r') as fin:
             linesfile = fin.read().split("\n")
             linesfile = filter(lambda x:len(x.strip(' '))>0,linesfile )
@@ -213,6 +260,13 @@ class HellowWorldGTK:
                 Znumber =filter(lambda x:x.find('Z')==0,ToolLine)
                 Dnumber =filter(lambda x:x.find('D')==0,ToolLine)
                 self.liststore.append([int(Tnumber[0].replace('T','')), float(Znumber[0].replace('Z','')), float(Dnumber[0].replace('D',''))])
+    def Thround(self,column, cell, model, iter):
+        origstr = cell.get_property('text')
+        sizestr = round(float(origstr),3)
+        cell.set_property('text', sizestr) 
+        return  sizestr       
+           
+
 # Ввод координат окончание
     def end_coordinate(self,widget,new_text):
         if (widget.get_editable()==False):
@@ -245,6 +299,9 @@ class HellowWorldGTK:
                 output.write(Tool_STR)
         self.command.load_tool_table()        
 
+    def editTable(self, widget, row, new_text, model, column):
+          iter = model.get_iter(row)
+          model.set_value(iter, column, float(new_text))
 
     def editToolTable(self, widget, row, new_text, model, column):
           iter = self.liststore.get_iter(row)
@@ -740,18 +797,18 @@ class HellowWorldGTK:
             self.Set_Font_Text_Button('f9','\nГлавное\nменю')
             self.builder.get_object("notebook1").set_current_page(4)   
         elif (NameButton.translate(None, string.whitespace).find('F3НольДетали')==0):
-            self.Set_Font_Text_Button('f1','F1\nG54\n')
-            self.Set_Font_Text_Button('f2','F2\nG55\n')
-            self.Set_Font_Text_Button('f3','F3\nG56\n ')
-            self.Set_Font_Text_Button('f4','F4\nG57\n ')
-            self.Set_Font_Text_Button('f5','F5\nG58\n')
-            self.Set_Font_Text_Button('f6','F6\nG59\n')
-            self.Set_Font_Text_Button('f7','F7\nРедактор\nТаблицы')
+            self.Set_Font_Text_Button('f1','F1\nАктивировать\nтекущею')
+            self.Set_Font_Text_Button('f2','F2\n\n')
+            self.Set_Font_Text_Button('f3','F3\n\n ')
+            self.Set_Font_Text_Button('f4','F4\n\n ')
+            self.Set_Font_Text_Button('f5','F5\n\n')
+            self.Set_Font_Text_Button('f6','F6\n\n')
+            self.Set_Font_Text_Button('f7','F7\n\n')
             self.Set_Font_Text_Button('f8','F8\n\n')
             self.Set_Font_Text_Button('f9','\nГлавное\nменю')
             self.builder.get_object("notebook1").set_current_page(3)
-            self.builder.get_object("f1").set_style(self.gren_style_button)  
-            self.curr_coordinate='G54'
+#            self.builder.get_object("f1").set_style(self.gren_style_button)  
+#            self.curr_coordinate='G54'
         else:
             self.jog_distance=0
             self.set_color_button()
