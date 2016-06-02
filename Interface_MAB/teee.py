@@ -352,7 +352,6 @@ class HellowWorldGTK:
 #        treeview.set_cursor_on_cell(path, column, ,True)
 
 
-
     def periodic(self): # обновляем значения интерфейса
 # обновляем параметры на форме
         self.status.poll()
@@ -683,38 +682,51 @@ class HellowWorldGTK:
             self.Set_Font_Text_Button('button3','F3 \nУдалить символ\n')            
             self.MDIWindows.show()
             self.builder.get_object("textview6").grab_focus();
-        elif (NameButton.translate(None, string.whitespace).find('F1G54')==0):
-            self.set_color_button_G_5x(widget)
-            self.curr_coordinate='G54'
+        elif (NameButton.translate(None, string.whitespace).find('F1Активироватьтекущею')==0):
+            path, column1 = self.treeview3.get_cursor()        
+            model =self.treeview3.get_model()
             self.command.mode(linuxcnc.MODE_MDI)
-            self.command.mdi('G54')
-        elif (NameButton.translate(None, string.whitespace).find('F2G55')==0):
-            self.set_color_button_G_5x(widget)
-            self.curr_coordinate='G55'
+            self.command.mdi(model.get_value(model.get_iter(path),0))
+        elif (NameButton.translate(None, string.whitespace).find('F2Проставитьтекущие')==0):
+            self.status.poll()
+            pos=self.status.actual_position
+            path, column1 = self.treeview3.get_cursor()        
+            model =self.treeview3.get_model()
+            model.set_value(model.get_iter(path),1,pos[0])
+            model.set_value(model.get_iter(path),2,pos[1])
+            model.set_value(model.get_iter(path),3,pos[2])
+        elif (NameButton.translate(None, string.whitespace).find('F3Прибавитьктекущим')==0):
+            self.status.poll()
+            pos=self.status.actual_position
+            path, column1 = self.treeview3.get_cursor()        
+            model =self.treeview3.get_model()
+            model.set_value(model.get_iter(path),1,model.get_value(model.get_iter(path),1)+pos[0])
+            model.set_value(model.get_iter(path),2,model.get_value(model.get_iter(path),2)+pos[1])
+            model.set_value(model.get_iter(path),3,model.get_value(model.get_iter(path),3)+pos[2])    
+        elif (NameButton.translate(None, string.whitespace).find('F4Вычестьизтекущих')==0):
+            self.status.poll()
+            pos=self.status.actual_position
+            path, column1 = self.treeview3.get_cursor()        
+            model =self.treeview3.get_model()
+            model.set_value(model.get_iter(path),1,model.get_value(model.get_iter(path),1)-pos[0])
+            model.set_value(model.get_iter(path),2,model.get_value(model.get_iter(path),2)-pos[1])
+            model.set_value(model.get_iter(path),3,model.get_value(model.get_iter(path),3)-pos[2]) 
+        elif (NameButton.translate(None, string.whitespace).find('F5Записатьтекущеюстроку')==0):
+            path, column1 = self.treeview3.get_cursor()        
+            model =self.treeview3.get_model()
+            self.command.mdi(model.get_value(model.get_iter(path),0))
+            self.SetAxis(0,model.get_value(model.get_iter(path),1))
+            self.SetAxis(1,model.get_value(model.get_iter(path),2))
+            self.SetAxis(2,model.get_value(model.get_iter(path),3))
+        elif (NameButton.translate(None, string.whitespace).find('F6Записатьтаблицу')==0):
+            path, column1 = self.treeview3.get_cursor()        
+            model =self.treeview3.get_model()
             self.command.mode(linuxcnc.MODE_MDI)
-            self.command.mdi('G55')
-        elif (NameButton.translate(None, string.whitespace).find('F3G56')==0):
-            self.set_color_button_G_5x(widget)
-            self.curr_coordinate='G56'
-            self.command.mode(linuxcnc.MODE_MDI)
-            self.command.mdi('G56')
-        elif (NameButton.translate(None, string.whitespace).find('F4G57')==0):
-            self.set_color_button_G_5x(widget)
-            self.curr_coordinate='G57'
-            self.command.mode(linuxcnc.MODE_MDI)
-            self.command.mdi('G57')
-        elif (NameButton.translate(None, string.whitespace).find('F5G58')==0):    
-            self.set_color_button_G_5x(widget)
-            self.curr_coordinate='G58'
-            self.command.mode(linuxcnc.MODE_MDI)
-            self.command.mdi('G58')      
-        elif (NameButton.translate(None, string.whitespace).find('F6G59')==0):     
-            self.set_color_button_G_5x(widget)
-            self.curr_coordinate='G59'
-            self.command.mode(linuxcnc.MODE_MDI)
-            self.command.mdi('G59')
-        elif (NameButton.translate(None, string.whitespace).find('F7РедакторТаблицы')==0):     
-            print 'g' 
+            for row in model:
+                self.command.mdi(row[0])
+                self.SetAxis(0,row[1])
+                self.SetAxis(1,row[2])
+                self.SetAxis(2,row[3])
 
         elif (NameButton.translate(None, string.whitespace).find('F4Допклавиши')==0): 
             self.Set_Font_Text_Button('f1','F1\nВыбор файла\nпрограммы')
@@ -798,11 +810,11 @@ class HellowWorldGTK:
             self.builder.get_object("notebook1").set_current_page(4)   
         elif (NameButton.translate(None, string.whitespace).find('F3НольДетали')==0):
             self.Set_Font_Text_Button('f1','F1\nАктивировать\nтекущею')
-            self.Set_Font_Text_Button('f2','F2\n\n')
-            self.Set_Font_Text_Button('f3','F3\n\n ')
-            self.Set_Font_Text_Button('f4','F4\n\n ')
-            self.Set_Font_Text_Button('f5','F5\n\n')
-            self.Set_Font_Text_Button('f6','F6\n\n')
+            self.Set_Font_Text_Button('f2','F2\nПроставить\nтекущие')
+            self.Set_Font_Text_Button('f3','F3\nПрибавить к\nтекущим')
+            self.Set_Font_Text_Button('f4','F4\nВычесть из\nтекущих')
+            self.Set_Font_Text_Button('f5','F5\nЗаписать\nтекущею строку')
+            self.Set_Font_Text_Button('f6','F6\nЗаписать\nтаблицу')
             self.Set_Font_Text_Button('f7','F7\n\n')
             self.Set_Font_Text_Button('f8','F8\n\n')
             self.Set_Font_Text_Button('f9','\nГлавное\nменю')
@@ -812,7 +824,6 @@ class HellowWorldGTK:
         else:
             self.jog_distance=0
             self.set_color_button()
-            self.set_color_button_G_5x(widget)
             self.Set_Font_Text_Button('f1','F1\nРучное\nУправление')
             self.Set_Font_Text_Button('f2','F2\nAUTO\n')
             self.Set_Font_Text_Button('f3','F3\nНоль\nДетали')
