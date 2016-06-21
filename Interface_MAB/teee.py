@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -* 
 import sys
+import ConfigParser
 try:
      import pygtk
      pygtk.require("2.0")
@@ -52,6 +53,7 @@ class HellowWorldGTK:
 #        self.command.home(2)
         self.emcgscreen=emc_interface.emc_control(linuxcnc)
         self.emcgscreen.home_all(1)
+        self.ConfigParser = ConfigParser.SafeConfigParser()
 
 #        inifile = linuxcnc.ini(sys.argv[2])
 #        print inifile
@@ -71,22 +73,8 @@ class HellowWorldGTK:
         self.machine_status = 0
 #+ Устанавливаем шрифты и все что не смог гладе
         lABELFont = pango.FontDescription("Tahoma 20")
-#        self.builder.get_object("ProgName").modify_font(lABELFont)
-#        self.builder.get_object("label4").modify_font(lABELFont)
-#        self.builder.get_object("label5").modify_font(lABELFont)
-#        self.builder.get_object("label6").modify_font(lABELFont)
-#        self.builder.get_object("label7").modify_font(lABELFont)
-#        self.builder.get_object("label8").modify_font(lABELFont)
-#        self.builder.get_object("label9").modify_font(lABELFont)
-#        self.builder.get_object("label15").modify_font(lABELFont)
-#        self.builder.get_object("label20").modify_font(lABELFont)
         self.builder.get_object("ProgName1").modify_font(lABELFont)
         self.builder.get_object("label27").modify_font(lABELFont)
-        
-            
-#            self.builder.get_object("cellrenderertext"+str(i)).set_alignment(0.5, 0.5)
-#            self.builder.get_object("cellrenderertext"+str(4)).set_property("markup", True)
-#            self.builder.get_object("cellrenderertext"+str(4)).set_markup('<span  dir="rtl" font="20" font_weight="heavy" />')
 
         self.tree_store = gtk.ListStore(gobject.TYPE_STRING,gobject.TYPE_FLOAT,gobject.TYPE_FLOAT,gobject.TYPE_FLOAT)
         self.treeview3 = gtk.TreeView(self.tree_store)
@@ -122,8 +110,6 @@ class HellowWorldGTK:
             dictCol2[i].set_property('expand', True)
             self.treeview3.append_column(dictCol2[i])
             i= i+1
-
-
         treeviewcolumn2.set_cell_data_func(cell2, self.Thround)
         treeviewcolumn3.set_cell_data_func(cell3, self.Thround)
         treeviewcolumn4.set_cell_data_func(cell4, self.Thround)
@@ -131,8 +117,6 @@ class HellowWorldGTK:
         cell3.connect("edited", self.editTable, self.tree_store,2)
         cell4.connect("edited", self.editTable, self.tree_store,3)
         self.treeview3.connect_after("move-cursor",self.move_cursor)
-
-
         self.tree_store.append([str('G54'),float(0),float(0),float(0)])
         self.tree_store.append([str('G55'),float(0),float(0),float(0)])
         self.tree_store.append([str('G56'),float(0),float(0),float(0)])
@@ -141,19 +125,6 @@ class HellowWorldGTK:
         self.tree_store.append([str('G59'),float(0),float(0),float(0)])        
         self.builder.get_object("scrolledwindow3").add(self.treeview3)
         self.builder.get_object("scrolledwindow3").show_all()
-#        self.builder.get_object("cellrenderertext4").set_property('xalign', 0.5);
-#        self.builder.get_object("cellrenderertext5").set_property('xalign', 0.5);
-#        self.builder.get_object("cellrenderertext6").set_property('xalign', 0.5);
-#        self.builder.get_object("cellrenderertext7").set_property('xalign', 0.5);
-
-
-#        self.builder.get_object("label40").modify_font(lABELFont)
-#        self.builder.get_object("label24").modify_font(lABELFont)
-#        self.builder.get_object("label25").modify_font(lABELFont)
-#        self.builder.get_object("label26").modify_font(lABELFont)
-#        lABELFont = pango.FontDescription("Tahoma 15")
-#        self.builder.get_object("label28").modify_font(lABELFont)
-#        self.builder.get_object("label29").modify_font(lABELFont)
 
         self.Set_Big_Fat(self.builder.get_object("label20"))
         self.Set_Big_Fat(self.builder.get_object("label30"))
@@ -163,33 +134,6 @@ class HellowWorldGTK:
         self.Set_Big_Fat(self.builder.get_object("label35"))
         self.Set_Big_Fat(self.builder.get_object("label36"))
         self.Set_Big_Fat(self.builder.get_object("label37"))
-#        self.Set_Big_Fat(self.builder.get_object("label4"))
-#        self.Set_Big_Fat(self.builder.get_object("label5"))
-#        self.Set_Big_Fat(self.builder.get_object("label6"))
-#        self.Set_Big_Fat(self.builder.get_object("label7"))
-#        self.Set_Big_Fat(self.builder.get_object("label8"))
-#        self.Set_Big_Fat(self.builder.get_object("label9"))
-        
-#        font = pango.FontDescription('Tahoma 40')
-#        self.builder.get_object("entry2").set_text('0')
-#        self.builder.get_object("entry2").modify_font(font)
-#        self.builder.get_object("entry3").set_text('0')
-#        self.builder.get_object("entry3").modify_font(font)
-#        self.builder.get_object("entry4").set_text('0')
-#        self.builder.get_object("entry4").modify_font(font)
-
-
-#        self.builder.get_object("textview1").modify_font(font)
-#        self.builder.get_object("textview2").modify_font(font)
-#        self.builder.get_object("textview7").modify_font(font)
-
-
-
-
-#        self.Set_Big_Fat(self.builder.get_object("textview1"))
-#        self.Set_Big_Fat(self.builder.get_object("textview2"))
-#        self.Set_Big_Fat(self.builder.get_object("textview7"))
-        
 
         self.builder.get_object("label32").modify_font(lABELFont)
         self.builder.get_object("label33").modify_font(lABELFont)
@@ -197,6 +141,7 @@ class HellowWorldGTK:
         self.builder.get_object("hal_dro6").modify_font(lABELFont)
         self.builder.get_object("hal_dro5").modify_font(lABELFont)
         self.builder.get_object("hal_dro4").modify_font(lABELFont)
+
         self.gremlin = self.builder.get_object("hal_gremlin1")
         self.gremlin.set_property('metric_units',True)
         self.gremlin_x=0
@@ -210,7 +155,45 @@ class HellowWorldGTK:
 #        print knn
 #        knn.add_accelerator("clicked",agroup,ord('F9'), 0, 0)
 #        knn.add_accelerator("clicked",agroup,gtk.gdk.keyval_from_name('g'), 0, 0)
+#+ Читаем конфигурационный файл
+        inifile = linuxcnc.ini(sys.argv[2])
+        toolfile = inifile.find('EMCIO', 'TOOL_TABLE')
+        cycle_time = inifile.find('EMCIO', 'CYCLE_TIME')
+        dir_ini=os.path.dirname(sys.argv[2])
+        self.color_path=dir_ini+"/Color_config.ini"
+        if os.path.exists(dir_ini+"/Color_config.ini")== False :
+           self.ConfigParser.add_section('DISPLAY')
+           self.ConfigParser.set('DISPLAY', 'COLOR_BUTTON',self.builder.get_object("colorbutton1").get_color().to_string())
+           self.ConfigParser.set('DISPLAY', 'COLOR_TEXT',self.builder.get_object("colorbutton2").get_color().to_string())
+           with open(self.color_path, 'w') as configfile:
+                self.ConfigParser.write(configfile)
+        self.ConfigParser.read(self.color_path)
+        color_button = self.ConfigParser.get('DISPLAY', 'COLOR_BUTTON')
+        color_text = self.ConfigParser.get('DISPLAY', 'COLOR_TEXT')
+        
+#+ Читаем конфигурационный файл
 #- Устанавливаем шрифты и все что не смог гладе       
+        
+    # + Получаем стиль кнопок из конфига
+        if (color_button!="unknown" and color_text!="unknown"):
+            print color_text
+            print color_button
+            Button_color =gtk.gdk.Color(color_button)
+            Text_color = gtk.gdk.Color(color_text)
+            self.builder.get_object("colorbutton1").set_color(Button_color)
+            self.builder.get_object("colorbutton2").set_color(Text_color)
+#cfgfile = open(sys.argv[2],'w')
+#            self.ConfigParser.write(cfgfile)
+#            cfgfile.close()
+
+        style = self.builder.get_object("f1").get_style().copy()
+        style.bg[gtk.STATE_NORMAL] = self.builder.get_object("colorbutton1").get_color()
+        self.color_button_style=style
+        self.color_text_style=self.builder.get_object("colorbutton2").get_color()
+
+    # - Получаем стиль кнопок из конфига
+
+
         self.default_style_button = self.builder.get_object("f1").get_style().copy()
         map = self.builder.get_object("f1").get_colormap() 
         color = map.alloc_color("green")
@@ -232,9 +215,8 @@ class HellowWorldGTK:
         self.Tag = self.builder.get_object("textview3").get_buffer().create_tag("Selected",background='yellow',size_points=24.0)
 #- Тэг на выделение 
         self.timelock()      
-        inifile = linuxcnc.ini(sys.argv[2])
-        toolfile = inifile.find('EMCIO', 'TOOL_TABLE')
-        cycle_time = inifile.find('EMCIO', 'CYCLE_TIME')
+
+
         dir_ini=os.path.dirname(sys.argv[2])
         self.tool_file = dir_ini+"/"+toolfile
 # редактор инструмента загрузим из файла и занесем в табличку
@@ -403,6 +385,16 @@ class HellowWorldGTK:
         widget.set_use_markup(gtk.TRUE)
         widget.set_markup('<span font="40" font_weight="heavy">'+widget.get_text()+'</span>')
     
+    def set_color_connect(self,widget):
+        style = self.builder.get_object("f1").get_style().copy()
+        style.bg[gtk.STATE_NORMAL] = self.builder.get_object("colorbutton1").get_color()
+        self.color_button_style=style
+        self.color_text_style=self.builder.get_object("colorbutton2").get_color()
+        self.ConfigParser.read(self.color_path)
+        self.ConfigParser.set('DISPLAY', 'COLOR_BUTTON',self.builder.get_object("colorbutton1").get_color().to_string())
+        self.ConfigParser.set('DISPLAY', 'COLOR_TEXT',self.builder.get_object("colorbutton2").get_color().to_string())
+        with open(self.color_path, 'w') as configfile:
+            self.ConfigParser.write(configfile)
 
 
     def Set_Font_Text_Button(self,widget,text):
@@ -411,6 +403,9 @@ class HellowWorldGTK:
         for widget2 in obj.get_children(): 
             if (isinstance(widget2, gtk.Label)):
                 widget2.set_justify(gtk.JUSTIFY_CENTER)
+#+ установим цвет кнопочек
+        obj.set_style(self.color_button_style)
+        obj.get_children()[0].modify_fg(gtk.STATE_NORMAL, self.color_text_style)                
 
 
     def on_textview3_move_cursor(self, widget,MovementStepU,intparam,boolparam):
@@ -821,6 +816,17 @@ class HellowWorldGTK:
             self.builder.get_object("notebook1").set_current_page(3)
 #            self.builder.get_object("f1").set_style(self.gren_style_button)  
 #            self.curr_coordinate='G54'
+        elif (NameButton.translate(None, string.whitespace).find('F8Система')==0):
+            self.Set_Font_Text_Button('f1','F1\n\n')
+            self.Set_Font_Text_Button('f2','F2\n\n')
+            self.Set_Font_Text_Button('f3','F3\n\n')
+            self.Set_Font_Text_Button('f4','F4\n\n')
+            self.Set_Font_Text_Button('f5','F5\n\n')
+            self.Set_Font_Text_Button('f6','F6\n\n')
+            self.Set_Font_Text_Button('f7','F7\n\n')
+            self.Set_Font_Text_Button('f8','F8\n\n')
+            self.Set_Font_Text_Button('f9','\nГлавное\nменю')
+            self.builder.get_object("notebook1").set_current_page(8)
         else:
             self.jog_distance=0
             self.set_color_button()
